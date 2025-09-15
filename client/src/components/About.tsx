@@ -1,6 +1,6 @@
 import { Card } from '@/components/ui/card'
 import { CheckCircle } from 'lucide-react'
-import aboutImage from '@assets/generated_images/Dr._Patil_school_office_setting_89f1bb35.png'
+import aboutImage from '@assets/image_1757931789627.png'
 
 export default function About() {
   const achievements = [
@@ -69,16 +69,16 @@ export default function About() {
             <Card className="p-6 hover-elevate max-w-md">
               <img
                 src={aboutImage}
-                alt="Dr. Ganesh D. Patil in Educational Leadership Role"
+                alt="Dr. Ganesh D. Patil receiving award at National Education Conclave, New Delhi"
                 className="w-full rounded-lg object-cover"
                 data-testid="img-about-profile"
               />
               <div className="mt-4 text-center">
                 <h3 className="font-semibold text-foreground" data-testid="text-about-image-title">
-                  Educational Leadership
+                  National Education Conclave
                 </h3>
                 <p className="text-sm text-muted-foreground mt-2" data-testid="text-about-image-subtitle">
-                  Dedicated to innovative education and holistic student development
+                  Award Recognition - New Delhi, 17 August 2015
                 </p>
               </div>
             </Card>
