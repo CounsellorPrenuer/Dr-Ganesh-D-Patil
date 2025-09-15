@@ -19,15 +19,24 @@ export default function Header() {
   useEffect(() => {
     const handleScroll = () => {
       const sections = ['hero', 'about', 'services', 'blog', 'testimonials', 'contact']
-      const scrollY = window.scrollY + 100 // Offset for header height
-
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const section = document.getElementById(sections[i])
-        if (section && section.offsetTop <= scrollY) {
-          setActiveSection(sections[i])
-          break
+      const scrollY = window.scrollY + 150 // Offset for header height
+      
+      let currentSection = 'hero' // Default to hero
+      
+      for (const sectionId of sections) {
+        const section = document.getElementById(sectionId)
+        if (section) {
+          const sectionTop = section.offsetTop - 200
+          const sectionBottom = sectionTop + section.offsetHeight
+          
+          if (scrollY >= sectionTop && scrollY < sectionBottom) {
+            currentSection = sectionId
+            break
+          }
         }
       }
+      
+      setActiveSection(currentSection)
     }
 
     window.addEventListener('scroll', handleScroll)
