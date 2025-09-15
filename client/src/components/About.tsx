@@ -1,14 +1,16 @@
 import { Card } from '@/components/ui/card'
 import { CheckCircle } from 'lucide-react'
-import profileImage from '@assets/image_1757930432279.png'
+import aboutImage from '@assets/generated_images/Dr._Patil_school_office_setting_89f1bb35.png'
 
 export default function About() {
   const achievements = [
     "Principal & Pedagogical Leader",
     "Head of Training R&D",
-    "Process Monitoring Expert",
-    "Educational Innovation Specialist",
-    "Value-Based Education Advocate",
+    "NCC Senior Under Officer with 'C' Certificate",
+    "Jalgaon to Ladakh Cycle Expedition Participant",
+    "NSS Group Leader",
+    "Academic Topper in English & Poetry",
+    "Kabaddi & Cross Country Sports Background",
     "187+ Professional Connections"
   ]
 
@@ -24,9 +26,9 @@ export default function About() {
           </p>
         </div>
 
-        <div className="max-w-4xl mx-auto">
+        <div className="grid lg:grid-cols-2 gap-12 items-start">
           {/* Text Content */}
-          <div className="space-y-8 text-center">
+          <div className="space-y-6">
             <p className="text-lg text-foreground leading-relaxed" data-testid="text-about-description">
               Currently serving as Principal, Pedagogical Leader, and Resource Person at Sekaria Sushila Devi Public School, 
               Jalgaon, I bring extensive experience in educational leadership and innovative academic processes.
@@ -43,19 +45,43 @@ export default function About() {
               part of everyday education while imbuing ethics and moral values to build future leaders.
             </p>
 
+            <p className="text-lg text-foreground leading-relaxed">
+              My diverse background includes being an NCC Senior Under Officer, participating in the challenging 
+              Jalgaon to Ladakh Cycle Expedition, and serving as an NSS Group Leader with involvement in social 
+              service activities including flood and earthquake relief efforts.
+            </p>
+
             {/* Achievements */}
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 pt-8">
+            <div className="grid md:grid-cols-2 gap-3 pt-4">
               {achievements.map((achievement, index) => (
-                <Card key={index} className="p-4 hover-elevate">
-                  <div className="flex items-center space-x-3">
-                    <CheckCircle className="h-5 w-5 text-secondary flex-shrink-0" />
-                    <span className="text-foreground font-medium" data-testid={`text-achievement-${index}`}>
-                      {achievement}
-                    </span>
-                  </div>
-                </Card>
+                <div key={index} className="flex items-center space-x-3 p-3 rounded-lg hover-elevate">
+                  <CheckCircle className="h-4 w-4 text-secondary flex-shrink-0" />
+                  <span className="text-foreground text-sm font-medium" data-testid={`text-achievement-${index}`}>
+                    {achievement}
+                  </span>
+                </div>
               ))}
             </div>
+          </div>
+
+          {/* Image */}
+          <div className="flex justify-center lg:justify-end">
+            <Card className="p-6 hover-elevate max-w-md">
+              <img
+                src={aboutImage}
+                alt="Dr. Ganesh D. Patil in Educational Leadership Role"
+                className="w-full rounded-lg object-cover"
+                data-testid="img-about-profile"
+              />
+              <div className="mt-4 text-center">
+                <h3 className="font-semibold text-foreground" data-testid="text-about-image-title">
+                  Educational Leadership
+                </h3>
+                <p className="text-sm text-muted-foreground mt-2" data-testid="text-about-image-subtitle">
+                  Dedicated to innovative education and holistic student development
+                </p>
+              </div>
+            </Card>
           </div>
         </div>
       </div>
