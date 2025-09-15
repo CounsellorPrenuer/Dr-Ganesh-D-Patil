@@ -67,8 +67,8 @@ export default function Footer() {
             </div>
             
             <p className="text-muted-foreground leading-relaxed max-w-md" data-testid="text-footer-description">
-              Empowering individuals and organizations to achieve their full potential through expert career guidance, 
-              strategic consulting, and comprehensive skill development programs.
+              Principal & Pedagogical Leader at Sekaria Sushila Devi Public School, dedicated to innovative 
+              education, value-based learning, and comprehensive student development through integrated approaches.
             </p>
 
             <div className="space-y-3">

@@ -14,33 +14,33 @@ export default function Services() {
   const services = [
     {
       icon: Target,
-      title: "Career Guidance",
-      description: "Personalized career counseling to help you identify the right path and achieve your professional goals.",
-      features: ["Career assessment", "Goal setting", "Action planning", "Progress tracking"]
+      title: "Educational Leadership",
+      description: "Strategic guidance for educational institutions to implement innovative and learner-centered academic processes.",
+      features: ["Pedagogical leadership", "Academic innovation", "Value-based systems", "Staff development"]
     },
     {
       icon: Users,
-      title: "Workshops & Seminars",
-      description: "Interactive group sessions focused on skill development, career planning, and professional growth.",
-      features: ["Group sessions", "Skill building", "Networking opportunities", "Practical exercises"]
+      title: "Training R&D",
+      description: "Comprehensive training programs designed to enhance teaching methodologies and educational effectiveness.",
+      features: ["Process monitoring", "Skill development", "Faculty training", "Performance evaluation"]
     },
     {
       icon: GraduationCap,
-      title: "Admission Guidance",
-      description: "Expert assistance in choosing the right educational path and navigating admission processes.",
-      features: ["Course selection", "Application support", "Interview preparation", "Scholarship guidance"]
+      title: "Student Development",
+      description: "Holistic approach to student growth focusing on academic excellence and character building.",
+      features: ["Career counseling", "Moral values", "Leadership skills", "Future readiness"]
     },
     {
       icon: Heart,
-      title: "Counselling",
-      description: "Professional psychological support to help overcome challenges and build confidence.",
-      features: ["Individual sessions", "Stress management", "Confidence building", "Personal development"]
+      title: "Integrated Learning",
+      description: "Innovative educational approaches that combine academics with sports, arts, and life skills.",
+      features: ["Holistic curriculum", "Creative learning", "Physical education", "Arts integration"]
     },
     {
       icon: Building,
-      title: "Consulting & Training",
-      description: "Organizational consulting and training programs for institutions and corporate teams.",
-      features: ["Institutional strategy", "Team training", "Process improvement", "Performance enhancement"]
+      title: "School Management",
+      description: "Expert consulting for educational institutions to optimize operations and achieve excellence.",
+      features: ["Strategic planning", "Quality assurance", "System optimization", "Performance enhancement"]
     }
   ]
 

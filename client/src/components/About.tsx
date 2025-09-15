@@ -4,11 +4,12 @@ import profileImage from '@assets/image_1757930432279.png'
 
 export default function About() {
   const achievements = [
-    "Certified Career Counsellor",
-    "Sr. Academician & Principal",
-    "School Management Consultant",
-    "Professional Skill Trainer",
-    "Content Writer & Expert"
+    "Principal & Pedagogical Leader",
+    "Head of Training R&D",
+    "Process Monitoring Expert",
+    "Educational Innovation Specialist",
+    "Value-Based Education Advocate",
+    "187+ Professional Connections"
   ]
 
   return (
@@ -27,21 +28,19 @@ export default function About() {
           {/* Text Content */}
           <div className="space-y-8 text-center">
             <p className="text-lg text-foreground leading-relaxed" data-testid="text-about-description">
-              As a Career Counsellor, School Management Consultant, Sr. Academician, Skill Trainer, 
-              and Content Writer, I bring comprehensive expertise to guide individuals and institutions 
-              toward excellence.
+              Currently serving as Principal, Pedagogical Leader, and Resource Person at Sekaria Sushila Devi Public School, 
+              Jalgaon, I bring extensive experience in educational leadership and innovative academic processes.
             </p>
             
             <p className="text-lg text-foreground leading-relaxed">
-              With my certification as a Career Counsellor and extensive experience in educational 
-              leadership, I specialize in helping students, working professionals, and organizations 
-              unlock their potential through strategic guidance and practical skill development.
+              As Head of Training R&D and Process Monitoring, I specialize in creating practical, innovative, 
+              and learner-centered academic systems. My mission is to establish value-based education that 
+              brings out the best in both staff and students.
             </p>
 
             <p className="text-lg text-foreground leading-relaxed">
-              My mission is to bridge the gap between aspirations and achievements, providing 
-              personalized support that transforms careers and enhances institutional effectiveness 
-              across diverse sectors including schools, colleges, and corporate environments.
+              I focus on holistic development through integrated learning approaches, making sports and arts 
+              part of everyday education while imbuing ethics and moral values to build future leaders.
             </p>
 
             {/* Achievements */}

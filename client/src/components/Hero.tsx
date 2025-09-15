@@ -39,8 +39,8 @@ export default function Hero() {
           </div>
 
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-12" data-testid="text-description">
-            Serving students, parents, schools, colleges, corporates, and working professionals with expert 
-            career guidance, strategic consulting, and comprehensive skill development programs.
+            Principal & Pedagogical Leader dedicated to practical, innovative, and learner-centered education. 
+            Specialized in value-based systems, staff development, and holistic student growth.
           </p>
 
           {/* CTA Buttons */}
