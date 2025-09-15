@@ -153,37 +153,20 @@ export default function Testimonials() {
               <ChevronLeft className="h-4 w-4" />
             </Button>
 
-            {/* Dots Indicator with Auto-play Indicator */}
+            {/* Dots Indicator */}
             <div className="flex space-x-2 items-center">
               {testimonials.map((_, index) => (
                 <button
                   key={index}
-                  onClick={(e) => {
-                    e.preventDefault()
-                    e.stopPropagation()
-                    console.log(`Dot ${index} clicked, current index: ${currentIndex}`)
-                    goToTestimonial(index)
-                  }}
-                  className={`p-2 rounded-full smooth-all hover-scale-sm transition-all duration-200 ${
+                  onClick={() => goToTestimonial(index)}
+                  className={`w-3 h-3 rounded-full transition-colors duration-200 ${
                     index === currentIndex 
-                      ? 'bg-primary animate-pulse-slow' 
+                      ? 'bg-primary' 
                       : 'bg-muted hover:bg-muted-foreground/50'
                   }`}
-                  style={{
-                    minWidth: '12px',
-                    minHeight: '12px',
-                    cursor: 'pointer'
-                  }}
                   data-testid={`button-testimonial-dot-${index}`}
-                  aria-label={`Go to testimonial ${index + 1}`}
-                >
-                  <div className="w-3 h-3 rounded-full bg-current"></div>
-                </button>
+                />
               ))}
-              {/* Auto-play indicator */}
-              <div className={`ml-4 w-2 h-2 rounded-full ${isAutoPlaying && !isPaused ? 'bg-secondary animate-pulse' : 'bg-muted'}`} 
-                   title={isAutoPlaying && !isPaused ? 'Auto-playing' : 'Paused'}>
-              </div>
             </div>
 
             <Button
