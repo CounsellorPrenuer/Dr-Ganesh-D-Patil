@@ -191,7 +191,7 @@ export default function Footer() {
               <span>by <strong className="text-primary">Mentoria</strong></span>
             </div>
             <p className="text-xs text-muted-foreground" data-testid="text-footer-partnership">
-              In partnership with Mentoria for enhanced career guidance services.
+              In partnership with  <span className='font'>Mentoria<span/> for enhanced career guidance services.
             </p>
           </div>
         </div>
