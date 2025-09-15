@@ -1,7 +1,8 @@
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { ChevronLeft, ChevronRight, Star, Quote } from 'lucide-react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useScrollAnimation } from '@/hooks/useScrollAnimation'
 
 export default function Testimonials() {
   const testimonials = [
@@ -43,27 +44,58 @@ export default function Testimonials() {
   ]
 
   const [currentIndex, setCurrentIndex] = useState(0)
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true)
+  const [isPaused, setIsPaused] = useState(false)
+  const { elementRef: testimonialsRef, isVisible: testimonialsVisible } = useScrollAnimation()
+
+  // Auto-slide functionality
+  useEffect(() => {
+    if (!isAutoPlaying || isPaused) return
+
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % testimonials.length)
+    }, 4000) // Change testimonial every 4 seconds
+
+    return () => clearInterval(interval)
+  }, [isAutoPlaying, isPaused, testimonials.length])
+
+  // Pause auto-slide when section is not visible
+  useEffect(() => {
+    setIsPaused(!testimonialsVisible)
+  }, [testimonialsVisible])
 
   const nextTestimonial = () => {
     setCurrentIndex((prev) => (prev + 1) % testimonials.length)
+    setIsAutoPlaying(false) // Stop auto-play when user manually navigates
+    setTimeout(() => setIsAutoPlaying(true), 10000) // Resume after 10 seconds
     console.log('Next testimonial clicked')
   }
 
   const prevTestimonial = () => {
     setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length)
+    setIsAutoPlaying(false) // Stop auto-play when user manually navigates
+    setTimeout(() => setIsAutoPlaying(true), 10000) // Resume after 10 seconds
     console.log('Previous testimonial clicked')
   }
 
   const goToTestimonial = (index: number) => {
     setCurrentIndex(index)
+    setIsAutoPlaying(false) // Stop auto-play when user manually navigates
+    setTimeout(() => setIsAutoPlaying(true), 10000) // Resume after 10 seconds
     console.log(`Testimonial ${index} selected`)
   }
 
   return (
-    <section id="testimonials" className="py-20 bg-background">
+    <section 
+      ref={testimonialsRef}
+      id="testimonials" 
+      className="py-20 gradient-bg-section"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+    >
       <div className="max-w-6xl mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4" data-testid="text-testimonials-title">
+        <div className={`text-center mb-16 ${testimonialsVisible ? 'animate-fade-in-up' : 'scroll-hidden'}`}>
+          <h2 className="text-4xl md:text-5xl font-bold gradient-text mb-4" data-testid="text-testimonials-title">
             Client Testimonials
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto" data-testid="text-testimonials-subtitle">
@@ -72,22 +104,29 @@ export default function Testimonials() {
         </div>
 
         {/* Testimonial Carousel */}
-        <div className="relative max-w-4xl mx-auto">
-          <Card className="p-8 md:p-12 text-center min-h-[300px] flex flex-col justify-center">
-            <Quote className="h-12 w-12 text-secondary/50 mx-auto mb-6" />
+        <div className={`relative max-w-4xl mx-auto ${testimonialsVisible ? 'animate-slide-in-scale stagger-1' : 'scroll-hidden'}`}>
+          <Card className="p-8 md:p-12 text-center min-h-[300px] flex flex-col justify-center hover-lift smooth-all relative overflow-hidden">
+            {/* Gradient border effect */}
+            <div className="absolute inset-0 gradient-border opacity-20 rounded-lg"></div>
             
-            <CardContent className="space-y-6">
+            <Quote className="h-12 w-12 text-secondary/50 mx-auto mb-6 animate-pulse-slow" />
+            
+            <CardContent className="space-y-6 relative z-10">
               <div className="flex justify-center mb-4">
                 {[...Array(testimonials[currentIndex].rating)].map((_, i) => (
-                  <Star key={i} className="h-5 w-5 fill-secondary text-secondary" />
+                  <Star 
+                    key={i} 
+                    className="h-5 w-5 fill-secondary text-secondary hover-scale-sm smooth-all"
+                    style={{ animationDelay: `${i * 0.1}s` }}
+                  />
                 ))}
               </div>
 
-              <blockquote className="text-lg md:text-xl text-foreground italic leading-relaxed" data-testid="text-testimonial-content">
+              <blockquote className="text-lg md:text-xl text-foreground italic leading-relaxed smooth-all" data-testid="text-testimonial-content">
                 "{testimonials[currentIndex].content}"
               </blockquote>
 
-              <div>
+              <div className="smooth-all">
                 <p className="font-semibold text-foreground text-lg" data-testid="text-testimonial-name">
                   {testimonials[currentIndex].name}
                 </p>
@@ -102,36 +141,42 @@ export default function Testimonials() {
           </Card>
 
           {/* Navigation Buttons */}
-          <div className="flex justify-between items-center mt-8">
+          <div className={`flex justify-between items-center mt-8 ${testimonialsVisible ? 'animate-fade-in-up stagger-2' : 'scroll-hidden'}`}>
             <Button
               variant="outline"
               size="icon"
               onClick={prevTestimonial}
-              className="rounded-full"
+              className="rounded-full hover-scale hover-glow smooth-all"
               data-testid="button-prev-testimonial"
             >
               <ChevronLeft className="h-4 w-4" />
             </Button>
 
-            {/* Dots Indicator */}
-            <div className="flex space-x-2">
+            {/* Dots Indicator with Auto-play Indicator */}
+            <div className="flex space-x-2 items-center">
               {testimonials.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => goToTestimonial(index)}
-                  className={`w-3 h-3 rounded-full transition-colors duration-200 ${
-                    index === currentIndex ? 'bg-primary' : 'bg-muted'
+                  className={`w-3 h-3 rounded-full smooth-all hover-scale-sm ${
+                    index === currentIndex 
+                      ? 'bg-primary animate-pulse-slow' 
+                      : 'bg-muted hover:bg-muted-foreground/50'
                   }`}
                   data-testid={`button-testimonial-dot-${index}`}
                 />
               ))}
+              {/* Auto-play indicator */}
+              <div className={`ml-4 w-2 h-2 rounded-full ${isAutoPlaying && !isPaused ? 'bg-secondary animate-pulse' : 'bg-muted'}`} 
+                   title={isAutoPlaying && !isPaused ? 'Auto-playing' : 'Paused'}>
+              </div>
             </div>
 
             <Button
               variant="outline"
               size="icon"
               onClick={nextTestimonial}
-              className="rounded-full"
+              className="rounded-full hover-scale hover-glow smooth-all"
               data-testid="button-next-testimonial"
             >
               <ChevronRight className="h-4 w-4" />
