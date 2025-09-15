@@ -67,12 +67,12 @@ export default function Testimonials() {
         {/* Testimonial Carousel */}
         <div className="relative max-w-4xl mx-auto">
           <Card className="p-8 md:p-12 text-center min-h-[300px] flex flex-col justify-center">
-            <Quote className="h-12 w-12 text-primary/30 mx-auto mb-6" />
+            <Quote className="h-12 w-12 text-secondary/50 mx-auto mb-6" />
             
             <CardContent className="space-y-6">
               <div className="flex justify-center mb-4">
                 {[...Array(testimonials[currentIndex].rating)].map((_, i) => (
-                  <Star key={i} className="h-5 w-5 fill-primary text-primary" />
+                  <Star key={i} className="h-5 w-5 fill-secondary text-secondary" />
                 ))}
               </div>
 
@@ -141,7 +141,7 @@ export default function Testimonials() {
             { number: "95%", label: "Success Rate" }
           ].map((stat, index) => (
             <div key={index} className="text-center">
-              <p className="text-3xl md:text-4xl font-bold text-primary mb-2" data-testid={`text-stat-number-${index}`}>
+              <p className="text-3xl md:text-4xl font-bold text-secondary mb-2" data-testid={`text-stat-number-${index}`}>
                 {stat.number}
               </p>
               <p className="text-muted-foreground" data-testid={`text-stat-label-${index}`}>

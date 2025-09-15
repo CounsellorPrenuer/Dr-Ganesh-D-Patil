@@ -74,7 +74,7 @@ export default function Services() {
                 data-testid={`card-service-${index}`}
               >
                 <CardHeader className="text-center pb-4">
-                  <div className="w-16 h-16 mx-auto mb-4 bg-primary/10 rounded-full flex items-center justify-center group-hover:bg-primary/20 transition-colors duration-300">
+                  <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-primary/10 to-secondary/20 rounded-full flex items-center justify-center group-hover:from-primary/20 group-hover:to-secondary/30 transition-all duration-300">
                     <IconComponent className="h-8 w-8 text-primary" />
                   </div>
                   <CardTitle className="text-xl font-semibold" data-testid={`text-service-title-${index}`}>
@@ -88,7 +88,7 @@ export default function Services() {
                   <ul className="space-y-2">
                     {service.features.map((feature, featureIndex) => (
                       <li key={featureIndex} className="flex items-center space-x-2">
-                        <div className="w-2 h-2 bg-primary rounded-full"></div>
+                        <div className="w-2 h-2 bg-secondary rounded-full"></div>
                         <span className="text-sm text-foreground" data-testid={`text-feature-${index}-${featureIndex}`}>
                           {feature}
                         </span>

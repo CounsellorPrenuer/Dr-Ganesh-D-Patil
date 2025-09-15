@@ -120,7 +120,7 @@ export default function Contact() {
                       className="flex items-center space-x-4 p-4 rounded-lg hover-elevate transition-all duration-200 group"
                       data-testid={`link-contact-${index}`}
                     >
-                      <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors duration-200">
+                      <div className="w-12 h-12 bg-gradient-to-br from-primary/10 to-secondary/20 rounded-lg flex items-center justify-center group-hover:from-primary/20 group-hover:to-secondary/30 transition-all duration-200">
                         <IconComponent className="h-6 w-6 text-primary" />
                       </div>
                       <div>
@@ -162,7 +162,7 @@ export default function Contact() {
             </div>
 
             {/* Quick Stats */}
-            <Card className="p-6 bg-primary/5 border-primary/20">
+            <Card className="p-6 bg-gradient-to-br from-accent/30 to-secondary/10 border-secondary/30">
               <h4 className="font-semibold text-foreground mb-4" data-testid="text-response-title">
                 Quick Response Guarantee
               </h4>
@@ -171,11 +171,11 @@ export default function Contact() {
               </p>
               <div className="grid grid-cols-2 gap-4 text-center">
                 <div>
-                  <p className="text-2xl font-bold text-primary" data-testid="text-response-time">24hrs</p>
+                  <p className="text-2xl font-bold text-secondary" data-testid="text-response-time">24hrs</p>
                   <p className="text-sm text-muted-foreground" data-testid="text-response-label">Response Time</p>
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-primary" data-testid="text-consultation-time">60min</p>
+                  <p className="text-2xl font-bold text-secondary" data-testid="text-consultation-time">60min</p>
                   <p className="text-sm text-muted-foreground" data-testid="text-consultation-label">Initial Consultation</p>
                 </div>
               </div>

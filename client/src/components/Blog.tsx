@@ -59,12 +59,12 @@ export default function Blog() {
             >
               <CardHeader className="pb-4">
                 <div className="flex items-center justify-between text-sm text-muted-foreground mb-3">
-                  <span className="bg-primary/10 text-primary px-3 py-1 rounded-full font-medium" data-testid={`text-blog-category-${index}`}>
+                  <span className="bg-gradient-to-r from-secondary/20 to-accent/30 text-secondary px-3 py-1 rounded-full font-medium" data-testid={`text-blog-category-${index}`}>
                     {post.category}
                   </span>
                 </div>
                 
-                <CardTitle className="text-xl font-semibold leading-tight group-hover:text-primary transition-colors duration-200" data-testid={`text-blog-title-${index}`}>
+                <CardTitle className="text-xl font-semibold leading-tight group-hover:text-secondary transition-colors duration-200" data-testid={`text-blog-title-${index}`}>
                   {post.title}
                 </CardTitle>
                 
@@ -95,7 +95,7 @@ export default function Blog() {
                 
                 <Button 
                   variant="ghost" 
-                  className="w-full justify-between group p-0 h-auto font-medium text-primary hover:text-primary"
+                  className="w-full justify-between group p-0 h-auto font-medium text-secondary hover:text-secondary"
                   onClick={(e) => {
                     e.stopPropagation()
                     handleReadMore(post.title)

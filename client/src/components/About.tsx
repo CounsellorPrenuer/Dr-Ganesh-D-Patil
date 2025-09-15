@@ -48,7 +48,7 @@ export default function About() {
             <div className="space-y-3 pt-4">
               {achievements.map((achievement, index) => (
                 <div key={index} className="flex items-center space-x-3">
-                  <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
+                  <CheckCircle className="h-5 w-5 text-secondary flex-shrink-0" />
                   <span className="text-foreground" data-testid={`text-achievement-${index}`}>
                     {achievement}
                   </span>

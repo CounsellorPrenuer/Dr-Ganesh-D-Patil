@@ -13,7 +13,7 @@ export default function Hero() {
   return (
     <section 
       id="hero" 
-      className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-accent/20 to-background pt-20"
+      className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-accent/30 to-primary/5 pt-20"
     >
       <div className="max-w-6xl mx-auto px-6 py-16">
         <div className="text-center">
@@ -22,7 +22,7 @@ export default function Hero() {
             <img
               src={profileImage}
               alt="Dr. Ganesh D. Patil"
-              className="w-48 h-48 rounded-2xl mx-auto object-cover shadow-lg border-4 border-primary/20"
+              className="w-48 h-48 rounded-2xl mx-auto object-cover shadow-lg border-4 border-secondary/40"
               data-testid="img-profile"
             />
           </div>
@@ -32,12 +32,10 @@ export default function Hero() {
             Dr. Ganesh D. Patil
           </h1>
           
-          <div className="flex flex-wrap justify-center gap-2 mb-8">
-            <span className="text-xl text-muted-foreground" data-testid="text-role-career">Career Counsellor</span>
-            <span className="text-xl text-muted-foreground">•</span>
-            <span className="text-xl text-muted-foreground" data-testid="text-role-consultant">School Management Consultant</span>
-            <span className="text-xl text-muted-foreground">•</span>
-            <span className="text-xl text-muted-foreground" data-testid="text-role-trainer">Skill Trainer</span>
+          <div className="flex flex-wrap justify-center gap-3 mb-8">
+            <span className="text-xl text-muted-foreground bg-accent/20 px-4 py-1 rounded-full" data-testid="text-role-career">Career Counsellor</span>
+            <span className="text-xl text-muted-foreground bg-accent/20 px-4 py-1 rounded-full" data-testid="text-role-consultant">School Management Consultant</span>
+            <span className="text-xl text-muted-foreground bg-accent/20 px-4 py-1 rounded-full" data-testid="text-role-trainer">Skill Trainer</span>
           </div>
 
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-12" data-testid="text-description">
