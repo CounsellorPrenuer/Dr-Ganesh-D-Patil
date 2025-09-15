@@ -11,7 +11,6 @@ import {
 } from 'lucide-react'
 
 export default function Services() {
-  // todo: replace with actual service details and pricing
   const services = [
     {
       icon: Target,
@@ -21,7 +20,7 @@ export default function Services() {
     },
     {
       icon: Users,
-      title: "Workshops",
+      title: "Workshops & Seminars",
       description: "Interactive group sessions focused on skill development, career planning, and professional growth.",
       features: ["Group sessions", "Skill building", "Networking opportunities", "Practical exercises"]
     },
@@ -47,7 +46,10 @@ export default function Services() {
 
   const handleServiceInquiry = (serviceName: string) => {
     console.log(`Inquiry for ${serviceName} service`)
-    // todo: implement service inquiry functionality
+    const contactSection = document.getElementById('contact')
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' })
+    }
   }
 
   return (

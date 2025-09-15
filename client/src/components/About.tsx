@@ -1,15 +1,14 @@
 import { Card } from '@/components/ui/card'
 import { CheckCircle } from 'lucide-react'
-import profileImage from '@assets/generated_images/Dr._Ganesh_Patil_headshot_8cee7046.png'
+import profileImage from '@assets/image_1757930432279.png'
 
 export default function About() {
-  // todo: replace with actual achievements and credentials
   const achievements = [
-    "15+ years in career counseling",
-    "500+ successful career transitions",
-    "Expert in educational leadership",
-    "Certified skill development trainer",
-    "Published researcher in career psychology"
+    "Certified Career Counsellor",
+    "Sr. Academician & Principal",
+    "School Management Consultant",
+    "Professional Skill Trainer",
+    "Content Writer & Expert"
   ]
 
   return (
@@ -28,21 +27,21 @@ export default function About() {
           {/* Text Content */}
           <div className="space-y-6">
             <p className="text-lg text-foreground leading-relaxed" data-testid="text-about-description">
-              With over 15 years of experience in career counseling and educational leadership, 
-              I have dedicated my career to helping individuals discover their true potential and 
-              navigate their professional journey with confidence.
+              As a Career Counsellor, School Management Consultant, Sr. Academician, Skill Trainer, 
+              and Content Writer, I bring comprehensive expertise to guide individuals and institutions 
+              toward excellence.
             </p>
             
             <p className="text-lg text-foreground leading-relaxed">
-              My expertise spans across career guidance, institutional management, and comprehensive 
-              skill development. I believe that every individual has unique strengths that, when properly 
-              identified and nurtured, can lead to extraordinary achievements.
+              With my certification as a Career Counsellor and extensive experience in educational 
+              leadership, I specialize in helping students, working professionals, and organizations 
+              unlock their potential through strategic guidance and practical skill development.
             </p>
 
             <p className="text-lg text-foreground leading-relaxed">
-              Through SKILL+, I offer personalized counseling sessions, strategic consulting for 
-              educational institutions, and practical skill training programs designed to bridge 
-              the gap between potential and performance.
+              My mission is to bridge the gap between aspirations and achievements, providing 
+              personalized support that transforms careers and enhances institutional effectiveness 
+              across diverse sectors including schools, colleges, and corporate environments.
             </p>
 
             {/* Achievements */}

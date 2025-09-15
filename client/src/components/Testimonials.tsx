@@ -4,7 +4,6 @@ import { ChevronLeft, ChevronRight, Star, Quote } from 'lucide-react'
 import { useState } from 'react'
 
 export default function Testimonials() {
-  // todo: replace with actual client testimonials
   const testimonials = [
     {
       name: "Priya Sharma",

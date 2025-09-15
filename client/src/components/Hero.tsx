@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button'
 import { ChevronDown } from 'lucide-react'
-import profileImage from '@assets/generated_images/Dr._Ganesh_Patil_headshot_8cee7046.png'
+import profileImage from '@assets/image_1757930432279.png'
 
 export default function Hero() {
   const scrollToSection = (sectionId: string) => {
@@ -41,8 +41,8 @@ export default function Hero() {
           </div>
 
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-12" data-testid="text-description">
-            Empowering individuals and organizations to achieve their full potential through expert career guidance, 
-            strategic consulting, and comprehensive skill development programs.
+            Serving students, parents, schools, colleges, corporates, and working professionals with expert 
+            career guidance, strategic consulting, and comprehensive skill development programs.
           </p>
 
           {/* CTA Buttons */}

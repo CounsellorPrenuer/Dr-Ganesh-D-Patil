@@ -3,7 +3,6 @@ import { Button } from '@/components/ui/button'
 import { Calendar, Clock, ArrowRight } from 'lucide-react'
 
 export default function Blog() {
-  // todo: replace with actual blog articles
   const blogPosts = [
     {
       title: "5 Essential Steps to Career Transition Success",
@@ -30,12 +29,12 @@ export default function Blog() {
 
   const handleReadMore = (title: string) => {
     console.log(`Reading article: ${title}`)
-    // todo: implement blog article navigation
+    alert(`Full article for "${title}" coming soon!`)
   }
 
   const handleViewAllPosts = () => {
     console.log('View all blog posts clicked')
-    // todo: implement blog listing page
+    alert('Complete blog section with more articles coming soon!')
   }
 
   return (

@@ -10,19 +10,21 @@ import { Button } from '@/components/ui/button'
 import logoImage from '@assets/8c7ab301d192-SKILL_PLUS_KA_BLACK_1757929948113.jpg'
 
 export default function Footer() {
-  const handleSocialClick = (platform: string) => {
+  const handleSocialClick = (platform: string, url: string) => {
+    if (url !== "#") {
+      window.open(url, '_blank')
+    }
     console.log(`${platform} footer link clicked`)
-    // todo: implement actual social media navigation
   }
 
   const handleEmailClick = () => {
+    window.location.href = 'mailto:skillpluska@rediffmail.com'
     console.log('Footer email clicked')
-    // todo: implement email functionality
   }
 
   const handlePhoneClick = () => {
+    window.location.href = 'tel:+919370000890'
     console.log('Footer phone clicked')
-    // todo: implement phone functionality
   }
 
   const quickLinks = [
@@ -87,7 +89,7 @@ export default function Footer() {
                   className="text-muted-foreground hover:text-primary transition-colors duration-200"
                   data-testid="button-footer-phone"
                 >
-                  +91 98765 43210
+                  +91 9370000890
                 </button>
               </div>
             </div>
@@ -95,10 +97,10 @@ export default function Footer() {
             {/* Social Media */}
             <div className="flex space-x-3">
               {[
-                { icon: Linkedin, label: 'LinkedIn' },
-                { icon: Facebook, label: 'Facebook' },
-                { icon: Instagram, label: 'Instagram' },
-                { icon: Youtube, label: 'YouTube' }
+                { icon: Linkedin, label: 'LinkedIn', url: 'https://www.linkedin.com/in/ganesh-d-patil-b5034717' },
+                { icon: Facebook, label: 'Facebook', url: 'https://www.facebook.com/ganeshd.patil.923' },
+                { icon: Instagram, label: 'Instagram', url: '#' },
+                { icon: Youtube, label: 'YouTube', url: '#' }
               ].map((social) => {
                 const IconComponent = social.icon
                 return (
@@ -107,7 +109,7 @@ export default function Footer() {
                     variant="outline"
                     size="icon"
                     className="rounded-full hover:scale-110 transition-transform duration-200"
-                    onClick={() => handleSocialClick(social.label)}
+                    onClick={() => handleSocialClick(social.label, social.url)}
                     data-testid={`button-footer-social-${social.label.toLowerCase()}`}
                   >
                     <IconComponent className="h-4 w-4" />

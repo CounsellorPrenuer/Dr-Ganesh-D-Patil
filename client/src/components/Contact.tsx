@@ -44,19 +44,19 @@ export default function Contact() {
     {
       icon: Mail,
       label: "Email",
-      value: "dr.ganesh@skillplus.com",
-      action: "mailto:dr.ganesh@skillplus.com"
+      value: "skillpluska@rediffmail.com",
+      action: "mailto:skillpluska@rediffmail.com"
     },
     {
       icon: Phone,
       label: "Phone",
-      value: "+91 98765 43210",
-      action: "tel:+919876543210"
+      value: "+91 9370000890",
+      action: "tel:+919370000890"
     },
     {
       icon: MapPin,
       label: "Office",
-      value: "Mumbai, Maharashtra, India",
+      value: "Maharashtra, India",
       action: "#"
     }
   ]
@@ -65,28 +65,30 @@ export default function Contact() {
     {
       icon: Linkedin,
       label: "LinkedIn",
-      url: "https://linkedin.com/in/drganeshpatil"
+      url: "https://www.linkedin.com/in/ganesh-d-patil-b5034717"
     },
     {
       icon: Facebook,
       label: "Facebook",
-      url: "https://facebook.com/skillpluscareer"
+      url: "https://www.facebook.com/ganeshd.patil.923"
     },
     {
       icon: Instagram,
       label: "Instagram",
-      url: "https://instagram.com/skillpluscareer"
+      url: "#"
     },
     {
       icon: Youtube,
       label: "YouTube",
-      url: "https://youtube.com/@skillpluscareer"
+      url: "#"
     }
   ]
 
   const handleSocialClick = (platform: string, url: string) => {
+    if (url !== "#") {
+      window.open(url, '_blank')
+    }
     console.log(`${platform} link clicked:`, url)
-    // todo: implement actual social media navigation
   }
 
   return (

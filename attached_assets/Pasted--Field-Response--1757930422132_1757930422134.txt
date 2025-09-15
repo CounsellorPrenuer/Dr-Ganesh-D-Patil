@@ -1,0 +1,25 @@
+| Field                        | Response                                                                                                                                           |
+| ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Timestamp**                | NA                                                                                                                                                 |
+| **Email Address**            | [skillpluska@rediffmail.com](mailto:skillpluska@rediffmail.com)                                                                                    |
+| **Full Name**                | Dr. Ganesh D. Patil                                                                                                                                |
+| **Phone Number**             | 9370000890                                                                                                                                         |
+| **Brand Name for Website**   | [www.careerbuilder.com](http://www.careerbuilder.com)                                                                                              |
+| **Services to Highlight**    | Career Guidance, Workshops & Seminars, Admission Guidance, Counselling, Consulting & Training                                                      |
+| **Preferred Domain Name**    | [www.careerplus.com](http://www.careerplus.com)                                                                                                    |
+| **Logo**                     | ![Logo](https://api.typeform.com/responses/files/99a0e116edf11c0322a95a0bf205309dec1c0587430326dcfb0b20598d374aa8/SKILL_PLUS_KA_BLACK.jpg)         |
+| **Target Audience**          | Students, Parents, Schools, Colleges, Corporates, Working Professionals                                                                            |
+| **Primary Goal**             | Attracting new clients, Showcasing services                                                                                                        |
+| **Color Scheme**             | Yellow, Blue, White                                                                                                                                |
+| **Homepage Content**         | About Me, Services Offered, Testimonials, Contact Information, Blog/Articles                                                                       |
+| **Need Blog Section?**       | Yes                                                                                                                                                |
+| **Social Media Links**       | LinkedIn, Facebook, Instagram, YouTube                                                                                                             |
+| **Testimonials to Feature?** | Yes                                                                                                                                                |
+| **About Description**        | Career Counsellor, School Management Consultant, Sr. Academician, Skill Trainer, Content Writer                                                    |
+| **Other Information**        | Certified Career Counsellor                                                                                                                        |
+| **Instagram Profile**        | NA                                                                                                                                                 |
+| **LinkedIn Profile**         | [LinkedIn](https://www.linkedin.com/in/ganesh-d-patil-b5034717?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app) |
+| **X (Twitter) Profile**      | NA                                                                                                                                                 |
+| **Other Profile (Facebook)** | [Facebook](https://www.facebook.com/ganeshd.patil.923?mibextid=ZbWKwL)                                                                             |
+| **Profile Picture**          | Uploaded (professional photo)                                                                                                                      |
+| **Remark**                   | NA                                                                                                                                                 |
