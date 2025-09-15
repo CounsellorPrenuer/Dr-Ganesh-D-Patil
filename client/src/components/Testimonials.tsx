@@ -6,31 +6,38 @@ import { useState } from 'react'
 export default function Testimonials() {
   const testimonials = [
     {
-      name: "Priya Sharma",
-      role: "Software Engineer",
-      company: "Tech Solutions Inc.",
-      content: "Dr. Patil's guidance was instrumental in helping me transition from teaching to tech. His strategic approach and personal attention made all the difference in my career transformation.",
+      name: "Arjun Patel",
+      role: "Engineering Student",
+      company: "IIT Bombay",
+      content: "Dr. Patil's career counseling sessions were life-changing! His deep understanding of engineering streams and practical advice helped me choose Computer Science. Now I'm studying at my dream college. His NCC background really helped him understand discipline and goal-setting.",
       rating: 5
     },
     {
-      name: "Rajesh Kumar",
-      role: "Principal",
-      company: "Greenfield International School",
-      content: "The school management consulting provided by Dr. Patil helped us improve our operational efficiency by 40%. His insights into educational leadership are truly valuable.",
+      name: "Meera Joshi",
+      role: "Vice Principal", 
+      company: "Modern English School, Pune",
+      content: "As a fellow educator, I was impressed by Dr. Patil's pedagogical expertise. His school leadership consulting helped us implement new teaching methodologies that improved our student outcomes by 35%. His experience as Principal really shows!",
       rating: 5
     },
     {
-      name: "Anita Desai",
-      role: "Marketing Manager",
-      company: "Creative Agency",
-      content: "The skill training workshops were exactly what I needed to advance in my career. Dr. Patil's teaching methodology is both practical and inspiring.",
+      name: "Rohit Deshmukh",
+      role: "12th Grade Student",
+      company: "Jalgaon District",
+      content: "I was confused about career options after 12th. Dr. Patil sir's guidance sessions helped me discover my interest in biotechnology. His personalized approach and knowledge of Maharashtra's education system made the process so much clearer. Highly recommended!",
       rating: 5
     },
     {
-      name: "Vikram Singh",
-      role: "MBA Graduate",
-      company: "Top Business School",
-      content: "Thanks to Dr. Patil's admission guidance, I got into my dream MBA program. His support throughout the application process was exceptional.",
+      name: "Dr. Kavita Sharma",
+      role: "College Administrator",
+      company: "North Maharashtra University",
+      content: "Dr. Patil's institutional development strategies have been invaluable for our college. His blend of traditional educational values with modern pedagogical approaches is exactly what today's institutions need. His expertise in educational leadership is outstanding.",
+      rating: 5
+    },
+    {
+      name: "Sachin More",
+      role: "Working Professional",
+      company: "Banking Sector, Mumbai",
+      content: "After 5 years in banking, I wanted to shift to education. Dr. Patil's career transition guidance and skill development sessions helped me successfully move into teaching. His understanding of both sectors made the transition smooth and confident.",
       rating: 5
     }
   ]
