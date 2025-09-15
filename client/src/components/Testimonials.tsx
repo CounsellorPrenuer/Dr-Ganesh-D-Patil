@@ -79,10 +79,11 @@ export default function Testimonials() {
   }
 
   const goToTestimonial = (index: number) => {
+    console.log(`Attempting to go to testimonial ${index}, current: ${currentIndex}`)
     setCurrentIndex(index)
     setIsAutoPlaying(false) // Stop auto-play when user manually navigates
     setTimeout(() => setIsAutoPlaying(true), 10000) // Resume after 10 seconds
-    console.log(`Testimonial ${index} selected`)
+    console.log(`Testimonial ${index} selected, state updated`)
   }
 
   return (
@@ -157,14 +158,27 @@ export default function Testimonials() {
               {testimonials.map((_, index) => (
                 <button
                   key={index}
-                  onClick={() => goToTestimonial(index)}
-                  className={`w-3 h-3 rounded-full smooth-all hover-scale-sm ${
+                  onClick={(e) => {
+                    e.preventDefault()
+                    e.stopPropagation()
+                    console.log(`Dot ${index} clicked, current index: ${currentIndex}`)
+                    goToTestimonial(index)
+                  }}
+                  className={`p-2 rounded-full smooth-all hover-scale-sm transition-all duration-200 ${
                     index === currentIndex 
                       ? 'bg-primary animate-pulse-slow' 
                       : 'bg-muted hover:bg-muted-foreground/50'
                   }`}
+                  style={{
+                    minWidth: '12px',
+                    minHeight: '12px',
+                    cursor: 'pointer'
+                  }}
                   data-testid={`button-testimonial-dot-${index}`}
-                />
+                  aria-label={`Go to testimonial ${index + 1}`}
+                >
+                  <div className="w-3 h-3 rounded-full bg-current"></div>
+                </button>
               ))}
               {/* Auto-play indicator */}
               <div className={`ml-4 w-2 h-2 rounded-full ${isAutoPlaying && !isPaused ? 'bg-secondary animate-pulse' : 'bg-muted'}`} 
