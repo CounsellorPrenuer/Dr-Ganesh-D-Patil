@@ -49,8 +49,8 @@ export default function Header() {
     { label: 'Home', id: 'hero' },
     { label: 'About', id: 'about' },
     { label: 'Services', id: 'services' },
-    { label: 'Blog', id: 'blog' },
     { label: 'Testimonials', id: 'testimonials' },
+    { label: 'Blog', id: 'blog' },
     { label: 'Contact', id: 'contact' }
   ]
 
