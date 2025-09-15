@@ -32,12 +32,45 @@ export default function Contact() {
     console.log(`${name} field updated:`, value)
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.log('Contact form submitted:', formData)
-    // todo: implement form submission functionality
-    alert('Thank you for your message! Dr. Patil will get back to you soon.')
-    setFormData({ name: '', email: '', subject: '', message: '' })
+    console.log('Form submitted with data:', formData)
+    setIsSubmitting(true)
+    
+    try {
+      console.log('Making fetch request to /api/contact...')
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+
+      console.log('Response status:', response.status)
+      const result = await response.json()
+      console.log('Response data:', result)
+
+      if (response.ok) {
+        const successMessage = result.message || 'Your message has been sent successfully! Dr. Patil will get back to you soon.'
+        console.log('Showing success message:', successMessage)
+        alert(successMessage)
+        console.log('Clearing form data...')
+        setFormData({ name: '', email: '', subject: '', message: '' })
+        console.log('Form data cleared')
+      } else {
+        console.error('Server error response:', result)
+        alert(result.details || result.error || 'Failed to send message. Please try again.')
+      }
+    } catch (error) {
+      console.error('Contact form error:', error)
+      alert('Failed to send message. Please check your internet connection and try again.')
+    } finally {
+      console.log('Setting isSubmitting to false')
+      setIsSubmitting(false)
+    }
   }
 
   const contactInfo = [
@@ -255,9 +288,10 @@ export default function Contact() {
                   type="submit" 
                   size="lg" 
                   className="w-full rounded-full"
+                  disabled={isSubmitting}
                   data-testid="button-send-message"
                 >
-                  Send Message
+                  {isSubmitting ? 'Sending...' : 'Send Message'}
                   <Send className="ml-2 h-4 w-4" />
                 </Button>
               </form>
