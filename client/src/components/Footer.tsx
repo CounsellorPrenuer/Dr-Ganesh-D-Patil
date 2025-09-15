@@ -4,7 +4,8 @@ import {
   Instagram, 
   Youtube, 
   Mail, 
-  Phone 
+  Phone,
+  Heart
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import logoImage from '@assets/8c7ab301d192-SKILL_PLUS_KA_BLACK_1757929948113.jpg'
@@ -160,24 +161,38 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-border mt-12 pt-8 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-          <p className="text-sm text-muted-foreground text-center md:text-left" data-testid="text-footer-copyright">
-            © 2024 SKILL+ Career Counseling. All rights reserved. | Dr. Ganesh D. Patil
-          </p>
-          
-          <div className="flex space-x-6 text-sm">
-            <button 
-              className="text-muted-foreground hover:text-primary transition-colors duration-200"
-              data-testid="button-footer-privacy"
-            >
-              Privacy Policy
-            </button>
-            <button 
-              className="text-muted-foreground hover:text-primary transition-colors duration-200"
-              data-testid="button-footer-terms"
-            >
-              Terms of Service
-            </button>
+        <div className="border-t border-border mt-12 pt-8 space-y-6">
+          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+            <p className="text-sm text-muted-foreground text-center md:text-left" data-testid="text-footer-copyright">
+              © 2024 SKILL+ Career Counseling. All rights reserved. | Dr. Ganesh D. Patil
+            </p>
+            
+            <div className="flex space-x-6 text-sm">
+              <button 
+                className="text-muted-foreground hover:text-primary transition-colors duration-200"
+                data-testid="button-footer-privacy"
+              >
+                Privacy Policy
+              </button>
+              <button 
+                className="text-muted-foreground hover:text-primary transition-colors duration-200"
+                data-testid="button-footer-terms"
+              >
+                Terms of Service
+              </button>
+            </div>
+          </div>
+
+          {/* Mentoria Partnership */}
+          <div className="text-center space-y-2 border-t border-border/50 pt-6">
+            <div className="flex items-center justify-center space-x-2 text-sm text-muted-foreground">
+              <span>Made with</span>
+              <Heart className="h-4 w-4 text-red-500 fill-current" />
+              <span>by <strong className="text-primary">Mentoria</strong></span>
+            </div>
+            <p className="text-xs text-muted-foreground" data-testid="text-footer-partnership">
+              In partnership with Mentoria for enhanced career guidance services.
+            </p>
           </div>
         </div>
       </div>
