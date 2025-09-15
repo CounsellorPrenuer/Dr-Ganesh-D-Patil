@@ -23,9 +23,9 @@ export default function About() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+        <div className="max-w-4xl mx-auto">
           {/* Text Content */}
-          <div className="space-y-6">
+          <div className="space-y-8 text-center">
             <p className="text-lg text-foreground leading-relaxed" data-testid="text-about-description">
               As a Career Counsellor, School Management Consultant, Sr. Academician, Skill Trainer, 
               and Content Writer, I bring comprehensive expertise to guide individuals and institutions 
@@ -45,28 +45,18 @@ export default function About() {
             </p>
 
             {/* Achievements */}
-            <div className="space-y-3 pt-4">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 pt-8">
               {achievements.map((achievement, index) => (
-                <div key={index} className="flex items-center space-x-3">
-                  <CheckCircle className="h-5 w-5 text-secondary flex-shrink-0" />
-                  <span className="text-foreground" data-testid={`text-achievement-${index}`}>
-                    {achievement}
-                  </span>
-                </div>
+                <Card key={index} className="p-4 hover-elevate">
+                  <div className="flex items-center space-x-3">
+                    <CheckCircle className="h-5 w-5 text-secondary flex-shrink-0" />
+                    <span className="text-foreground font-medium" data-testid={`text-achievement-${index}`}>
+                      {achievement}
+                    </span>
+                  </div>
+                </Card>
               ))}
             </div>
-          </div>
-
-          {/* Image */}
-          <div className="flex justify-center">
-            <Card className="p-6 hover-elevate">
-              <img
-                src={profileImage}
-                alt="Dr. Ganesh D. Patil Professional Photo"
-                className="w-full max-w-md rounded-lg object-cover"
-                data-testid="img-about-profile"
-              />
-            </Card>
           </div>
         </div>
       </div>
