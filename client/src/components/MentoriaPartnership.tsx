@@ -39,7 +39,7 @@ export default function MentoriaPartnership() {
               <img 
                 src={mentoriaLogo} 
                 alt="Mentoria - Clutter to Clarity" 
-                className="h-16 w-auto"
+                className="h-32 w-auto"
                 data-testid="mentoria-logo"
               />
             </div>
