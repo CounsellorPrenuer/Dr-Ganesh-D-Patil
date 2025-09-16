@@ -1,5 +1,6 @@
 import { CheckCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import mentoriaLogo from '@assets/image_1758015336109.png'
 
 export default function MentoriaPartnership() {
   const benefits = [
@@ -31,11 +32,13 @@ export default function MentoriaPartnership() {
 
         {/* Mentoria Logo */}
         <div className="flex justify-center mb-16">
-          <div className="bg-white rounded-lg shadow-sm p-8 w-64">
-            <div className="text-center">
-              <div className="text-2xl font-bold text-primary mb-2">MENTORIA</div>
-              <div className="text-sm text-muted-foreground">SCIENCE OF CAREERS</div>
-            </div>
+          <div className="bg-white rounded-lg shadow-sm p-8">
+            <img 
+              src={mentoriaLogo} 
+              alt="Mentoria - Clutter to Clarity" 
+              className="h-24 w-auto"
+              data-testid="mentoria-logo"
+            />
           </div>
         </div>
 
