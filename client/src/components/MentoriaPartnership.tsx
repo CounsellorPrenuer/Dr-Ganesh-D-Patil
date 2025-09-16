@@ -79,8 +79,7 @@ export default function MentoriaPartnership() {
 
             <Button 
               onClick={handleVisitMentoria}
-              variant="outline"
-              className="mt-6"
+              className="mt-6 bg-blue-600 hover:bg-blue-700 text-white"
               data-testid="button-visit-mentoria"
             >
               Visit Mentoria →
