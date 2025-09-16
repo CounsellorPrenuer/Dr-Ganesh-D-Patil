@@ -1,15 +1,16 @@
 import { CheckCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
 import mentoriaLogo from '@assets/image_1758015336109.png'
 
 export default function MentoriaPartnership() {
   const benefits = [
-    "Scientifically validated career assessments from Mentoria",
-    "Lifelong access to Mentoria's mentorship platform", 
-    "Access to Mentoria's comprehensive Knowledge Gateway",
-    "Opportunities to connect with industry experts and mentors",
-    "Invitations to exclusive webinars and workshops",
-    "Personalized career roadmap with step-by-step guidance"
+    { text: "Scientifically validated", bold: "career assessments", suffix: "from Mentoria" },
+    { text: "", bold: "Lifelong access", suffix: "to Mentoria's mentorship platform" },
+    { text: "Access to Mentoria's comprehensive", bold: "Knowledge Gateway", suffix: "" },
+    { text: "Opportunities to connect with", bold: "industry experts", suffix: "and mentors" },
+    { text: "Invitations to exclusive", bold: "webinars and workshops", suffix: "" },
+    { text: "Personalized career roadmap with", bold: "step-by-step guidance", suffix: "" }
   ]
 
   const handleVisitMentoria = () => {
@@ -18,7 +19,7 @@ export default function MentoriaPartnership() {
   }
 
   return (
-    <section className="py-20 bg-muted/30">
+    <section className="py-20 bg-background">
       <div className="max-w-6xl mx-auto px-6">
         {/* Header */}
         <div className="text-center mb-16">
@@ -30,19 +31,44 @@ export default function MentoriaPartnership() {
           </p>
         </div>
 
-        {/* Mentoria Logo */}
-        <div className="flex justify-center mb-16">
-          <div className="bg-white rounded-lg shadow-sm p-8">
-            <img 
-              src={mentoriaLogo} 
-              alt="Mentoria - Clutter to Clarity" 
-              className="h-24 w-auto"
-              data-testid="mentoria-logo"
-            />
-          </div>
-        </div>
+        {/* Main Card Container */}
+        <Card className="p-8 mb-12 bg-card border border-border">
+          <div className="grid lg:grid-cols-2 gap-12 items-start">
+            {/* Left Column - Mentoria Logo */}
+            <div className="flex justify-center lg:justify-start">
+              <img 
+                src={mentoriaLogo} 
+                alt="Mentoria - Clutter to Clarity" 
+                className="h-16 w-auto"
+                data-testid="mentoria-logo"
+              />
+            </div>
 
-        {/* Main Content */}
+            {/* Right Column - Benefits */}
+            <div className="space-y-6">
+              <h3 className="text-2xl font-semibold text-foreground" data-testid="text-mentoria-benefits-title">
+                What You Get Through This Partnership
+              </h3>
+              
+              <div className="space-y-4">
+                {benefits.map((benefit, index) => (
+                  <div 
+                    key={index} 
+                    className="flex items-start space-x-3"
+                    data-testid={`item-mentoria-benefit-${index}`}
+                  >
+                    <CheckCircle className="h-5 w-5 text-blue-500 mt-0.5 flex-shrink-0" />
+                    <span className="text-muted-foreground leading-relaxed">
+                      {benefit.text} <strong className="text-foreground">{benefit.bold}</strong> {benefit.suffix}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </Card>
+
+        {/* Bottom Section - Partner Description */}
         <div className="grid lg:grid-cols-2 gap-12 items-start">
           {/* Left Column - Partner Description */}
           <div className="space-y-6">
@@ -68,6 +94,7 @@ export default function MentoriaPartnership() {
 
             <Button 
               onClick={handleVisitMentoria}
+              variant="outline"
               className="mt-6"
               data-testid="button-visit-mentoria"
             >
@@ -75,27 +102,8 @@ export default function MentoriaPartnership() {
             </Button>
           </div>
 
-          {/* Right Column - Benefits */}
-          <div className="space-y-6">
-            <h3 className="text-2xl font-semibold text-foreground" data-testid="text-mentoria-benefits-title">
-              What You Get Through This Partnership
-            </h3>
-            
-            <div className="space-y-4">
-              {benefits.map((benefit, index) => (
-                <div 
-                  key={index} 
-                  className="flex items-start space-x-3"
-                  data-testid={`item-mentoria-benefit-${index}`}
-                >
-                  <CheckCircle className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
-                  <span className="text-muted-foreground leading-relaxed">
-                    {benefit}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
+          {/* Right Column - Empty for spacing */}
+          <div></div>
         </div>
       </div>
     </section>
