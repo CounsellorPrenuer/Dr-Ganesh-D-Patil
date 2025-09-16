@@ -5,6 +5,7 @@ import Services from '@/components/Services'
 import Testimonials from '@/components/Testimonials'
 import Blog from '@/components/Blog'
 import Contact from '@/components/Contact'
+import MentoriaPartnership from '@/components/MentoriaPartnership'
 import Footer from '@/components/Footer'
 
 export default function Home() {
@@ -19,6 +20,7 @@ export default function Home() {
         <Blog />
         <Contact />
       </main>
+      <MentoriaPartnership />
       <Footer />
     </div>
   )
