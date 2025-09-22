@@ -191,7 +191,7 @@ export default function AdminDashboard() {
             <Button 
               variant="outline" 
               className="w-full"
-              onClick={() => setLocation("/admin/contact-inquiries")}
+              onClick={() => setLocation("/admin/contact")}
               data-testid="button-view-all-inquiries"
             >
               View All Inquiries

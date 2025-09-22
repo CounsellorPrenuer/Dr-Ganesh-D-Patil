@@ -34,7 +34,7 @@ const menuItems = [
   },
   {
     title: "Contact Inquiries",
-    url: "/admin/contact-inquiries",
+    url: "/admin/contact",
     icon: Mail,
   },
   {

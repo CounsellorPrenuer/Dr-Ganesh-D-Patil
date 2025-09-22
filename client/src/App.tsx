@@ -9,6 +9,7 @@ import AdminLogin from "@/pages/AdminLogin";
 import AdminLayout from "@/pages/AdminLayout";
 import AdminDashboard from "@/pages/AdminDashboard";
 import AdminTestimonials from "@/pages/AdminTestimonials";
+import AdminContact from "@/pages/AdminContact";
 import SubmitTestimonial from "@/pages/SubmitTestimonial";
 
 function Router() {
@@ -51,12 +52,9 @@ function Router() {
           </div>
         </AdminLayout>
       </Route>
-      <Route path="/admin/contact-inquiries">
+      <Route path="/admin/contact">
         <AdminLayout>
-          <div className="p-6">
-            <h1 className="text-2xl font-bold mb-4">Contact Inquiries</h1>
-            <p className="text-muted-foreground">Contact inquiries management coming soon...</p>
-          </div>
+          <AdminContact />
         </AdminLayout>
       </Route>
       {/* Fallback to 404 */}
