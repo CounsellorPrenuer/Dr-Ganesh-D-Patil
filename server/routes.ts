@@ -349,6 +349,28 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.patch("/api/admin/services/:id/toggle", requireAdmin, async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { active } = req.body;
+      
+      if (typeof active !== 'boolean') {
+        return res.status(400).json({ error: "Active field must be a boolean" });
+      }
+      
+      const service = await storage.updateService(id, { active });
+      
+      if (service) {
+        res.json(service);
+      } else {
+        res.status(404).json({ error: "Service not found" });
+      }
+    } catch (error) {
+      console.error("Toggle service error:", error);
+      res.status(500).json({ error: "Failed to toggle service status" });
+    }
+  });
+
   // Articles routes
   app.get("/api/articles", async (req, res) => {
     try {

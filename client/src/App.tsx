@@ -10,12 +10,15 @@ import AdminLayout from "@/pages/AdminLayout";
 import AdminDashboard from "@/pages/AdminDashboard";
 import AdminTestimonials from "@/pages/AdminTestimonials";
 import AdminContact from "@/pages/AdminContact";
+import AdminServices from "@/pages/AdminServices";
+import Services from "@/pages/Services";
 import SubmitTestimonial from "@/pages/SubmitTestimonial";
 
 function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
+      <Route path="/services" component={Services} />
       <Route path="/testimonial" component={SubmitTestimonial} />
       <Route path="/admin/login" component={AdminLogin} />
       <Route path="/admin/dashboard">
@@ -30,10 +33,7 @@ function Router() {
       </Route>
       <Route path="/admin/services">
         <AdminLayout>
-          <div className="p-6">
-            <h1 className="text-2xl font-bold mb-4">Services Management</h1>
-            <p className="text-muted-foreground">Services management coming soon...</p>
-          </div>
+          <AdminServices />
         </AdminLayout>
       </Route>
       <Route path="/admin/articles">
