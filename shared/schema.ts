@@ -102,6 +102,20 @@ export const insertTestimonialSchema = createInsertSchema(testimonials).pick({
   rating: z.number().min(1, "Rating must be at least 1").max(5, "Rating cannot exceed 5"),
 });
 
+export const insertAdminTestimonialSchema = createInsertSchema(testimonials).pick({
+  name: true,
+  position: true,
+  organization: true,
+  message: true,
+  rating: true,
+}).extend({
+  name: z.string().min(1, "Name is required").max(100, "Name too long").trim(),
+  position: z.string().max(100, "Position too long").trim().optional(),
+  organization: z.string().max(100, "Organization too long").trim().optional(),
+  message: z.string().min(1, "Message is required").max(1000, "Message too long").trim(),
+  rating: z.number().min(1, "Rating must be at least 1").max(5, "Rating cannot exceed 5"),
+});
+
 export const insertServiceSchema = createInsertSchema(services).pick({
   title: true,
   description: true,
@@ -159,6 +173,7 @@ export type User = typeof users.$inferSelect;
 export type InsertContactInquiry = z.infer<typeof insertContactInquirySchema>;
 export type ContactInquiry = typeof contactInquiries.$inferSelect;
 export type InsertTestimonial = z.infer<typeof insertTestimonialSchema>;
+export type InsertAdminTestimonial = z.infer<typeof insertAdminTestimonialSchema>;
 export type Testimonial = typeof testimonials.$inferSelect;
 export type InsertService = z.infer<typeof insertServiceSchema>;
 export type Service = typeof services.$inferSelect;

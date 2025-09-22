@@ -3,7 +3,7 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { emailService } from "./emailService";
 import { paymentService } from "./paymentService";
-import { insertContactInquirySchema, insertTestimonialSchema, insertServiceSchema, insertArticleSchema, insertPaymentSchema } from "@shared/schema";
+import { insertContactInquirySchema, insertTestimonialSchema, insertAdminTestimonialSchema, insertServiceSchema, insertArticleSchema, insertPaymentSchema } from "@shared/schema";
 import { fromZodError } from "zod-validation-error";
 
 // Helper function to send data to Google Sheets
@@ -262,6 +262,40 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Delete testimonial error:", error);
       res.status(500).json({ error: "Failed to delete testimonial" });
+    }
+  });
+
+  app.post("/api/admin/testimonials", requireAdmin, async (req, res) => {
+    try {
+      const validationResult = insertAdminTestimonialSchema.safeParse(req.body);
+      
+      if (!validationResult.success) {
+        const validationError = fromZodError(validationResult.error);
+        console.log("Admin testimonial validation failed:", validationError.message);
+        return res.status(400).json({ 
+          error: "Invalid testimonial data", 
+          details: validationError.message 
+        });
+      }
+
+      // Admin created testimonials are automatically approved and don't need email
+      const testimonialData = {
+        ...validationResult.data,
+        email: "admin@skillplus.com", // Placeholder email for admin-created testimonials
+        approved: true
+      };
+      
+      const testimonial = await storage.createTestimonial(testimonialData);
+      console.log("Admin testimonial created successfully:", testimonial.id);
+      
+      res.status(201).json({ 
+        success: true, 
+        message: "Testimonial created successfully",
+        testimonial 
+      });
+    } catch (error) {
+      console.error("Create admin testimonial error:", error);
+      res.status(500).json({ error: "Failed to create testimonial" });
     }
   });
 

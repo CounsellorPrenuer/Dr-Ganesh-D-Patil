@@ -74,7 +74,7 @@ export default function Articles() {
   )) as string[];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div className="container mx-auto px-4 py-8 space-y-8">
         
         {/* Header */}
@@ -195,7 +195,7 @@ export default function Articles() {
                     <Button 
                       variant="outline" 
                       size="sm" 
-                      className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
+                      className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors mt-4"
                       data-testid={`button-read-${article.id}`}
                     >
                       Read Article

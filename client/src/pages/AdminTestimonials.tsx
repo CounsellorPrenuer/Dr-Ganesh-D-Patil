@@ -4,10 +4,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Star, Check, Trash2, Eye, User } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { Star, Check, Trash2, Eye, User, Plus } from "lucide-react";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { format } from "date-fns";
+import { useToast } from "@/hooks/use-toast";
 
 interface Testimonial {
   id: string;
@@ -23,6 +27,15 @@ interface Testimonial {
 
 export default function AdminTestimonials() {
   const [selectedTestimonial, setSelectedTestimonial] = useState<Testimonial | null>(null);
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+  const [createFormData, setCreateFormData] = useState({
+    name: "",
+    position: "",
+    organization: "",
+    message: "",
+    rating: 5
+  });
+  const { toast } = useToast();
 
   const { data: testimonials, isLoading, error } = useQuery<Testimonial[]>({
     queryKey: ["/api/admin/testimonials"],
@@ -50,6 +63,23 @@ export default function AdminTestimonials() {
     },
   });
 
+  const createMutation = useMutation({
+    mutationFn: async (data: typeof createFormData) => {
+      const response = await apiRequest("POST", "/api/admin/testimonials", data);
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/testimonials"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/stats"] });
+      setIsCreateDialogOpen(false);
+      setCreateFormData({ name: "", position: "", organization: "", message: "", rating: 5 });
+      toast({ title: "Success", description: "Testimonial created successfully" });
+    },
+    onError: (error: any) => {
+      toast({ title: "Error", description: error.message || "Failed to create testimonial", variant: "destructive" });
+    },
+  });
+
   const handleApprove = (id: string) => {
     approveMutation.mutate(id);
   };
@@ -58,6 +88,19 @@ export default function AdminTestimonials() {
     if (confirm("Are you sure you want to delete this testimonial?")) {
       deleteMutation.mutate(id);
     }
+  };
+
+  const handleCreateSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!createFormData.name.trim() || !createFormData.message.trim()) {
+      toast({ title: "Error", description: "Name and message are required", variant: "destructive" });
+      return;
+    }
+    createMutation.mutate(createFormData);
+  };
+
+  const handleCreateInputChange = (field: string, value: string | number) => {
+    setCreateFormData(prev => ({ ...prev, [field]: value }));
   };
 
   const renderStars = (rating: number) => {
@@ -106,6 +149,107 @@ export default function AdminTestimonials() {
           </p>
         </div>
         <div className="flex items-center space-x-2">
+          <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
+            <DialogTrigger asChild>
+              <Button data-testid="button-create-testimonial">
+                <Plus className="h-4 w-4 mr-2" />
+                Create Testimonial
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-md">
+              <DialogHeader>
+                <DialogTitle>Create New Testimonial</DialogTitle>
+                <DialogDescription>
+                  Add a testimonial as an admin. It will be automatically approved.
+                </DialogDescription>
+              </DialogHeader>
+              <form onSubmit={handleCreateSubmit} className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="create-name">Name *</Label>
+                  <Input
+                    id="create-name"
+                    value={createFormData.name}
+                    onChange={(e) => handleCreateInputChange("name", e.target.value)}
+                    placeholder="Enter name"
+                    data-testid="input-create-name"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="create-position">Position</Label>
+                  <Input
+                    id="create-position"
+                    value={createFormData.position}
+                    onChange={(e) => handleCreateInputChange("position", e.target.value)}
+                    placeholder="Enter position"
+                    data-testid="input-create-position"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="create-organization">Organization</Label>
+                  <Input
+                    id="create-organization"
+                    value={createFormData.organization}
+                    onChange={(e) => handleCreateInputChange("organization", e.target.value)}
+                    placeholder="Enter organization"
+                    data-testid="input-create-organization"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="create-rating">Rating</Label>
+                  <div className="flex items-center space-x-2">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <button
+                        key={star}
+                        type="button"
+                        onClick={() => handleCreateInputChange("rating", star)}
+                        className="focus:outline-none"
+                        data-testid={`button-rating-${star}`}
+                      >
+                        <Star
+                          className={`h-6 w-6 cursor-pointer transition-colors ${
+                            star <= createFormData.rating
+                              ? "fill-yellow-400 text-yellow-400"
+                              : "text-gray-300 hover:text-yellow-400"
+                          }`}
+                        />
+                      </button>
+                    ))}
+                    <span className="text-sm text-muted-foreground ml-2">
+                      ({createFormData.rating}/5)
+                    </span>
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="create-message">Message *</Label>
+                  <Textarea
+                    id="create-message"
+                    value={createFormData.message}
+                    onChange={(e) => handleCreateInputChange("message", e.target.value)}
+                    placeholder="Enter testimonial message"
+                    rows={4}
+                    data-testid="textarea-create-message"
+                  />
+                </div>
+                <div className="flex items-center space-x-2 pt-4">
+                  <Button
+                    type="submit"
+                    disabled={createMutation.isPending}
+                    data-testid="button-submit-testimonial"
+                  >
+                    {createMutation.isPending ? "Creating..." : "Create Testimonial"}
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => setIsCreateDialogOpen(false)}
+                    data-testid="button-cancel-create"
+                  >
+                    Cancel
+                  </Button>
+                </div>
+              </form>
+            </DialogContent>
+          </Dialog>
           <Badge variant="outline" data-testid="text-total-testimonials">
             {testimonials?.length || 0} Total
           </Badge>
