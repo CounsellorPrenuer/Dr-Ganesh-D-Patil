@@ -11,7 +11,10 @@ import AdminDashboard from "@/pages/AdminDashboard";
 import AdminTestimonials from "@/pages/AdminTestimonials";
 import AdminContact from "@/pages/AdminContact";
 import AdminServices from "@/pages/AdminServices";
+import AdminArticles from "@/pages/AdminArticles";
 import Services from "@/pages/Services";
+import Articles from "@/pages/Articles";
+import ArticleDetail from "@/pages/ArticleDetail";
 import SubmitTestimonial from "@/pages/SubmitTestimonial";
 
 function Router() {
@@ -19,6 +22,8 @@ function Router() {
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/services" component={Services} />
+      <Route path="/articles" component={Articles} />
+      <Route path="/articles/:id" component={ArticleDetail} />
       <Route path="/testimonial" component={SubmitTestimonial} />
       <Route path="/admin/login" component={AdminLogin} />
       <Route path="/admin/dashboard">
@@ -38,10 +43,7 @@ function Router() {
       </Route>
       <Route path="/admin/articles">
         <AdminLayout>
-          <div className="p-6">
-            <h1 className="text-2xl font-bold mb-4">Articles Management</h1>
-            <p className="text-muted-foreground">Articles management coming soon...</p>
-          </div>
+          <AdminArticles />
         </AdminLayout>
       </Route>
       <Route path="/admin/payments">
