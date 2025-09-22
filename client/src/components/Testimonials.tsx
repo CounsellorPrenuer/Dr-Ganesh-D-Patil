@@ -1,47 +1,61 @@
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
+import { Alert, AlertDescription } from '@/components/ui/alert'
 import { ChevronLeft, ChevronRight, Star, Quote } from 'lucide-react'
 import { useState, useEffect } from 'react'
+import { useQuery } from '@tanstack/react-query'
 import { useScrollAnimation } from '@/hooks/useScrollAnimation'
 
+interface Testimonial {
+  id: string;
+  name: string;
+  email: string;
+  position: string | null;
+  organization: string | null;
+  message: string;
+  rating: number;
+  approved: boolean;
+  createdAt: string;
+}
+
 export default function Testimonials() {
-  const testimonials = [
+  const { data: testimonials = [], isLoading, error } = useQuery<Testimonial[]>({
+    queryKey: ["/api/testimonials"],
+  });
+
+  // Fallback testimonials in case backend is empty
+  const fallbackTestimonials = [
     {
+      id: "fallback-1",
       name: "Arjun Patel",
-      role: "Engineering Student",
-      company: "IIT Bombay",
-      content: "Dr. Patil's career counseling sessions were life-changing! His deep understanding of engineering streams and practical advice helped me choose Computer Science. Now I'm studying at my dream college. His NCC background really helped him understand discipline and goal-setting.",
+      position: "Engineering Student",
+      organization: "IIT Bombay",
+      message: "Dr. Patil's career counseling sessions were life-changing! His deep understanding of engineering streams and practical advice helped me choose Computer Science. Now I'm studying at my dream college. His NCC background really helped him understand discipline and goal-setting.",
       rating: 5
     },
     {
+      id: "fallback-2",
       name: "Meera Joshi",
-      role: "Vice Principal", 
-      company: "Modern English School, Pune",
-      content: "As a fellow educator, I was impressed by Dr. Patil's pedagogical expertise. His school leadership consulting helped us implement new teaching methodologies that improved our student outcomes by 35%. His experience as Principal really shows!",
+      position: "Vice Principal", 
+      organization: "Modern English School, Pune",
+      message: "As a fellow educator, I was impressed by Dr. Patil's pedagogical expertise. His school leadership consulting helped us implement new teaching methodologies that improved our student outcomes by 35%. His experience as Principal really shows!",
       rating: 5
     },
     {
+      id: "fallback-3",
       name: "Rohit Deshmukh",
-      role: "12th Grade Student",
-      company: "Jalgaon District",
-      content: "I was confused about career options after 12th. Dr. Patil sir's guidance sessions helped me discover my interest in biotechnology. His personalized approach and knowledge of Maharashtra's education system made the process so much clearer. Highly recommended!",
-      rating: 5
-    },
-    {
-      name: "Dr. Kavita Sharma",
-      role: "College Administrator",
-      company: "North Maharashtra University",
-      content: "Dr. Patil's institutional development strategies have been invaluable for our college. His blend of traditional educational values with modern pedagogical approaches is exactly what today's institutions need. His expertise in educational leadership is outstanding.",
-      rating: 5
-    },
-    {
-      name: "Sachin More",
-      role: "Working Professional",
-      company: "Banking Sector, Mumbai",
-      content: "After 5 years in banking, I wanted to shift to education. Dr. Patil's career transition guidance and skill development sessions helped me successfully move into teaching. His understanding of both sectors made the transition smooth and confident.",
+      position: "12th Grade Student",
+      organization: "Jalgaon District",
+      message: "I was confused about career options after 12th. Dr. Patil sir's guidance sessions helped me discover my interest in biotechnology. His personalized approach and knowledge of Maharashtra's education system made the process so much clearer. Highly recommended!",
       rating: 5
     }
-  ]
+  ];
+
+  // Filter for approved testimonials only
+  const approvedTestimonials = testimonials.filter(t => t.approved);
+  
+  // Use approved backend testimonials if available, otherwise fallback
+  const displayTestimonials = approvedTestimonials.length > 0 ? approvedTestimonials : fallbackTestimonials;
 
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isAutoPlaying, setIsAutoPlaying] = useState(true)
@@ -50,14 +64,14 @@ export default function Testimonials() {
 
   // Auto-slide functionality
   useEffect(() => {
-    if (!isAutoPlaying || isPaused) return
+    if (!isAutoPlaying || isPaused || displayTestimonials.length === 0) return
 
     const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % testimonials.length)
+      setCurrentIndex((prev) => (prev + 1) % displayTestimonials.length)
     }, 4000) // Change testimonial every 4 seconds
 
     return () => clearInterval(interval)
-  }, [isAutoPlaying, isPaused, testimonials.length])
+  }, [isAutoPlaying, isPaused, displayTestimonials.length])
 
   // Pause auto-slide when section is not visible
   useEffect(() => {
@@ -65,14 +79,14 @@ export default function Testimonials() {
   }, [testimonialsVisible])
 
   const nextTestimonial = () => {
-    setCurrentIndex((prev) => (prev + 1) % testimonials.length)
+    setCurrentIndex((prev) => (prev + 1) % displayTestimonials.length)
     setIsAutoPlaying(false) // Stop auto-play when user manually navigates
     setTimeout(() => setIsAutoPlaying(true), 10000) // Resume after 10 seconds
     console.log('Next testimonial clicked')
   }
 
   const prevTestimonial = () => {
-    setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length)
+    setCurrentIndex((prev) => (prev - 1 + displayTestimonials.length) % displayTestimonials.length)
     setIsAutoPlaying(false) // Stop auto-play when user manually navigates
     setTimeout(() => setIsAutoPlaying(true), 10000) // Resume after 10 seconds
     console.log('Previous testimonial clicked')
@@ -113,31 +127,45 @@ export default function Testimonials() {
             <Quote className="h-12 w-12 text-secondary/50 mx-auto mb-6 animate-pulse-slow" />
             
             <CardContent className="space-y-6 relative z-10">
-              <div className="flex justify-center mb-4">
-                {[...Array(testimonials[currentIndex].rating)].map((_, i) => (
-                  <Star 
-                    key={i} 
-                    className="h-5 w-5 fill-secondary text-secondary hover-scale-sm smooth-all"
-                    style={{ animationDelay: `${i * 0.1}s` }}
-                  />
-                ))}
-              </div>
+              {isLoading ? (
+                <div className="text-center text-muted-foreground">Loading testimonials...</div>
+              ) : error ? (
+                <Alert>
+                  <AlertDescription>
+                    Unable to load testimonials. Showing sample testimonials.
+                  </AlertDescription>
+                </Alert>
+              ) : null}
+              
+              {displayTestimonials.length > 0 && (
+                <>
+                  <div className="flex justify-center mb-4">
+                    {[...Array(displayTestimonials[currentIndex].rating)].map((_, i) => (
+                      <Star 
+                        key={i} 
+                        className="h-5 w-5 fill-secondary text-secondary hover-scale-sm smooth-all"
+                        style={{ animationDelay: `${i * 0.1}s` }}
+                      />
+                    ))}
+                  </div>
 
-              <blockquote className="text-lg md:text-xl text-foreground italic leading-relaxed smooth-all" data-testid="text-testimonial-content">
-                "{testimonials[currentIndex].content}"
-              </blockquote>
-
-              <div className="smooth-all">
-                <p className="font-semibold text-foreground text-lg" data-testid="text-testimonial-name">
-                  {testimonials[currentIndex].name}
-                </p>
-                <p className="text-muted-foreground" data-testid="text-testimonial-role">
-                  {testimonials[currentIndex].role}
-                </p>
-                <p className="text-sm text-muted-foreground" data-testid="text-testimonial-company">
-                  {testimonials[currentIndex].company}
-                </p>
-              </div>
+                  <p className="text-lg md:text-xl text-foreground leading-relaxed mb-6 italic relative z-10" data-testid={`text-testimonial-content-${currentIndex}`}>
+                    "{displayTestimonials[currentIndex].message}"
+                  </p>
+                  
+                  <div className="space-y-2 relative z-10">
+                    <p className="font-semibold text-lg text-foreground" data-testid={`text-testimonial-name-${currentIndex}`}>
+                      {displayTestimonials[currentIndex].name}
+                    </p>
+                    <p className="text-muted-foreground" data-testid={`text-testimonial-role-${currentIndex}`}>
+                      {displayTestimonials[currentIndex].position && displayTestimonials[currentIndex].organization 
+                        ? `${displayTestimonials[currentIndex].position} • ${displayTestimonials[currentIndex].organization}`
+                        : displayTestimonials[currentIndex].position || displayTestimonials[currentIndex].organization || "SKILL+ Client"
+                      }
+                    </p>
+                  </div>
+                </>
+              )}
             </CardContent>
           </Card>
 
@@ -155,7 +183,7 @@ export default function Testimonials() {
 
             {/* Dots Indicator */}
             <div className="flex space-x-2 items-center">
-              {testimonials.map((_, index) => (
+              {displayTestimonials.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => goToTestimonial(index)}

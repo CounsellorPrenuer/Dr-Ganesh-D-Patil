@@ -1,5 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
+import { Alert, AlertDescription } from '@/components/ui/alert'
 import { 
   Users, 
   GraduationCap, 
@@ -9,40 +10,71 @@ import {
   Target,
   ArrowRight 
 } from 'lucide-react'
+import { useQuery } from '@tanstack/react-query'
+import { Link } from 'wouter'
+
+interface Service {
+  id: string;
+  title: string;
+  description: string;
+  price: string;
+  duration?: string | null;
+  features?: string[] | null;
+  active: boolean;
+  createdAt: string;
+}
 
 export default function Services() {
-  const services = [
+  const { data: services = [], isLoading, error } = useQuery<Service[]>({
+    queryKey: ["/api/services"],
+  });
+
+  // Fallback services in case backend is empty
+  const fallbackServices = [
     {
-      icon: Target,
+      id: "fallback-1",
       title: "Educational Leadership",
       description: "Strategic guidance for educational institutions to implement innovative and learner-centered academic processes.",
-      features: ["Pedagogical leadership", "Academic innovation", "Value-based systems", "Staff development"]
+      price: "Contact for pricing",
+      features: ["Pedagogical leadership", "Academic innovation", "Value-based systems", "Staff development"],
+      icon: Target
     },
     {
-      icon: Users,
+      id: "fallback-2", 
       title: "Training R&D",
       description: "Comprehensive training programs designed to enhance teaching methodologies and educational effectiveness.",
-      features: ["Process monitoring", "Skill development", "Faculty training", "Performance evaluation"]
+      price: "Contact for pricing",
+      features: ["Process monitoring", "Skill development", "Faculty training", "Performance evaluation"],
+      icon: Users
     },
     {
-      icon: GraduationCap,
+      id: "fallback-3",
       title: "Student Development",
       description: "Holistic approach to student growth focusing on academic excellence and character building.",
-      features: ["Career counseling", "Moral values", "Leadership skills", "Future readiness"]
-    },
-    {
-      icon: Heart,
-      title: "Integrated Learning",
-      description: "Innovative educational approaches that combine academics with sports, arts, and life skills.",
-      features: ["Holistic curriculum", "Creative learning", "Physical education", "Arts integration"]
-    },
-    {
-      icon: Building,
-      title: "School Management",
-      description: "Expert consulting for educational institutions to optimize operations and achieve excellence.",
-      features: ["Strategic planning", "Quality assurance", "System optimization", "Performance enhancement"]
+      price: "Contact for pricing", 
+      features: ["Career counseling", "Moral values", "Leadership skills", "Future readiness"],
+      icon: GraduationCap
     }
-  ]
+  ];
+
+  // Filter for active services only
+  const activeServices = services.filter(s => s.active);
+  
+  // Use active backend services if available, otherwise fallback
+  const displayServices = activeServices.length > 0 ? activeServices : fallbackServices;
+  
+  // Map icons to services (for backend services that don't have icons)
+  const getServiceIcon = (title: string, index: number) => {
+    const iconMap: { [key: string]: any } = {
+      "Educational Leadership": Target,
+      "Training R&D": Users,
+      "Student Development": GraduationCap,
+      "Integrated Learning": Heart,
+      "School Management": Building,
+    };
+    
+    return iconMap[title] || [Target, Users, GraduationCap, Heart, Building][index % 5];
+  };
 
   const handleServiceInquiry = (serviceName: string) => {
     console.log(`Inquiry for ${serviceName} service`)
@@ -64,12 +96,24 @@ export default function Services() {
           </p>
         </div>
 
+        {isLoading ? (
+          <div className="text-center text-muted-foreground py-8">Loading services...</div>
+        ) : error ? (
+          <Alert className="mb-8">
+            <AlertDescription>
+              Unable to load services. Showing sample services.
+            </AlertDescription>
+          </Alert>
+        ) : null}
+
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {services.map((service, index) => {
-            const IconComponent = service.icon
+          {displayServices.map((service, index) => {
+            const IconComponent = getServiceIcon(service.title, index);
+            const features = service.features || [];
+            
             return (
               <Card 
-                key={index} 
+                key={service.id || index} 
                 className="hover-elevate active-elevate-2 hover:-translate-y-1 transition-all duration-300 cursor-pointer group"
                 data-testid={`card-service-${index}`}
               >
@@ -83,27 +127,46 @@ export default function Services() {
                   <CardDescription className="text-muted-foreground" data-testid={`text-service-description-${index}`}>
                     {service.description}
                   </CardDescription>
+                  {service.price && (
+                    <div className="text-lg font-semibold text-primary mt-2">
+                      ₹{service.price}
+                    </div>
+                  )}
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <ul className="space-y-2">
-                    {service.features.map((feature, featureIndex) => (
-                      <li key={featureIndex} className="flex items-center space-x-2">
-                        <div className="w-2 h-2 bg-secondary rounded-full"></div>
-                        <span className="text-sm text-foreground" data-testid={`text-feature-${index}-${featureIndex}`}>
-                          {feature}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                  <Button 
-                    variant="outline" 
-                    className="w-full rounded-full group"
-                    onClick={() => handleServiceInquiry(service.title)}
-                    data-testid={`button-inquire-${index}`}
-                  >
-                    Learn More
-                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-200" />
-                  </Button>
+                  {features.length > 0 && (
+                    <ul className="space-y-2">
+                      {features.map((feature, featureIndex) => (
+                        <li key={featureIndex} className="flex items-center space-x-2">
+                          <div className="w-2 h-2 bg-secondary rounded-full"></div>
+                          <span className="text-sm text-foreground" data-testid={`text-feature-${index}-${featureIndex}`}>
+                            {feature}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                  
+                  <div className="flex flex-col space-y-2">
+                    <Link href="/services">
+                      <Button 
+                        variant="default" 
+                        className="w-full rounded-full group"
+                        data-testid={`button-book-${index}`}
+                      >
+                        Book Service
+                        <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-200" />
+                      </Button>
+                    </Link>
+                    <Button 
+                      variant="outline" 
+                      className="w-full rounded-full group"
+                      onClick={() => handleServiceInquiry(service.title)}
+                      data-testid={`button-inquire-${index}`}
+                    >
+                      Learn More
+                    </Button>
+                  </div>
                 </CardContent>
               </Card>
             )
