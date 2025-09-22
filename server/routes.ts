@@ -536,6 +536,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Data export endpoint
   app.get("/api/admin/export", requireAdmin, async (req, res) => {
     try {
+      const { format = 'json', include, from, to } = req.query;
+      
+      // Determine which data to include
+      const includeTypes = Array.isArray(include) ? include : (include ? [include] : [
+        'testimonials', 'services', 'articles', 'payments', 'contactInquiries'
+      ]);
+
+      // Fetch all data
       const [testimonials, services, articles, payments, contactInquiries] = await Promise.all([
         storage.getTestimonials(),
         storage.getServices(),
@@ -544,18 +552,93 @@ export async function registerRoutes(app: Express): Promise<Server> {
         storage.getContactInquiries()
       ]);
 
-      const exportData = {
-        testimonials,
-        services,
-        articles,
-        payments,
-        contactInquiries,
-        exportedAt: new Date().toISOString(),
+      // Apply date filtering if specified
+      const filterByDate = (items: any[], dateField = 'createdAt') => {
+        if (!from && !to) return items;
+        
+        return items.filter(item => {
+          const itemDate = new Date(item[dateField] || item.createdAt);
+          if (from && itemDate < new Date(from as string)) return false;
+          if (to && itemDate > new Date(to as string)) return false;
+          return true;
+        });
       };
 
-      res.setHeader('Content-Type', 'application/json');
-      res.setHeader('Content-Disposition', 'attachment; filename=skillplus-data-export.json');
-      res.json(exportData);
+      // Build export data based on selected types
+      const exportData: any = {
+        exportedAt: new Date().toISOString(),
+        exportFormat: format,
+        dateRange: from || to ? { from: from || null, to: to || null } : null,
+      };
+
+      if (includeTypes.includes('contactInquiries')) {
+        exportData.contactInquiries = filterByDate(contactInquiries);
+      }
+      if (includeTypes.includes('testimonials')) {
+        exportData.testimonials = filterByDate(testimonials);
+      }
+      if (includeTypes.includes('services')) {
+        exportData.services = filterByDate(services);
+      }
+      if (includeTypes.includes('articles')) {
+        exportData.articles = filterByDate(articles, 'updatedAt');
+      }
+      if (includeTypes.includes('payments')) {
+        exportData.payments = filterByDate(payments);
+      }
+
+      const timestamp = new Date().toISOString().split('T')[0];
+
+      if (format === 'csv') {
+        // Helper function to safely escape CSV values
+        const escapeCsvValue = (value: any): string => {
+          if (value === null || value === undefined) return '';
+          
+          let stringValue = typeof value === 'object' ? JSON.stringify(value) : String(value);
+          
+          // Prevent CSV injection by sanitizing leading special characters
+          if (/^[=+\-@]/.test(stringValue)) {
+            stringValue = "'" + stringValue;
+          }
+          
+          // Handle quotes, commas, and newlines according to RFC 4180
+          if (stringValue.includes('"') || stringValue.includes(',') || stringValue.includes('\n') || stringValue.includes('\r')) {
+            stringValue = '"' + stringValue.replace(/"/g, '""') + '"';
+          }
+          
+          return stringValue;
+        };
+
+        // Convert to CSV format
+        let csvContent = '';
+        
+        Object.keys(exportData).forEach(key => {
+          if (Array.isArray(exportData[key]) && exportData[key].length > 0) {
+            csvContent += `\n${key.toUpperCase()}\n`;
+            const items = exportData[key];
+            const headers = Object.keys(items[0]);
+            
+            // Add escaped headers
+            csvContent += headers.map(escapeCsvValue).join(',') + '\n';
+            
+            // Add escaped data rows
+            items.forEach((item: any) => {
+              const row = headers.map(header => escapeCsvValue(item[header]));
+              csvContent += row.join(',') + '\n';
+            });
+            csvContent += '\n';
+          }
+        });
+
+        res.setHeader('Content-Type', 'text/csv');
+        res.setHeader('Content-Disposition', `attachment; filename=admin-data-export_${timestamp}.csv`);
+        res.send(csvContent);
+      } else {
+        // Default JSON format
+        res.setHeader('Content-Type', 'application/json');
+        res.setHeader('Content-Disposition', `attachment; filename=admin-data-export_${timestamp}.json`);
+        res.json(exportData);
+      }
     } catch (error) {
       console.error("Data export error:", error);
       res.status(500).json({ error: "Failed to export data" });

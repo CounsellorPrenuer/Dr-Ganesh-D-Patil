@@ -8,6 +8,7 @@ import {
   FileText, 
   CreditCard, 
   Mail, 
+  Download,
   LogOut,
   Settings
 } from "lucide-react";
@@ -51,6 +52,11 @@ const menuItems = [
     title: "Articles",
     url: "/admin/articles",
     icon: FileText,
+  },
+  {
+    title: "Export Data",
+    url: "/admin/export",
+    icon: Download,
   },
   {
     title: "Payments",

@@ -12,6 +12,7 @@ import AdminTestimonials from "@/pages/AdminTestimonials";
 import AdminContact from "@/pages/AdminContact";
 import AdminServices from "@/pages/AdminServices";
 import AdminArticles from "@/pages/AdminArticles";
+import AdminExport from "@/pages/AdminExport";
 import Services from "@/pages/Services";
 import Articles from "@/pages/Articles";
 import ArticleDetail from "@/pages/ArticleDetail";
@@ -44,6 +45,11 @@ function Router() {
       <Route path="/admin/articles">
         <AdminLayout>
           <AdminArticles />
+        </AdminLayout>
+      </Route>
+      <Route path="/admin/export">
+        <AdminLayout>
+          <AdminExport />
         </AdminLayout>
       </Route>
       <Route path="/admin/payments">
