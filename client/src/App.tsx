@@ -12,6 +12,7 @@ import AdminTestimonials from "@/pages/AdminTestimonials";
 import AdminContact from "@/pages/AdminContact";
 import AdminServices from "@/pages/AdminServices";
 import AdminArticles from "@/pages/AdminArticles";
+import AdminPayments from "@/pages/AdminPayments";
 import AdminExport from "@/pages/AdminExport";
 import Services from "@/pages/Services";
 import Articles from "@/pages/Articles";
@@ -54,10 +55,7 @@ function Router() {
       </Route>
       <Route path="/admin/payments">
         <AdminLayout>
-          <div className="p-6">
-            <h1 className="text-2xl font-bold mb-4">Payments Management</h1>
-            <p className="text-muted-foreground">Payments management coming soon...</p>
-          </div>
+          <AdminPayments />
         </AdminLayout>
       </Route>
       <Route path="/admin/contact">
