@@ -1,10 +1,11 @@
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Alert, AlertDescription } from '@/components/ui/alert'
-import { ChevronLeft, ChevronRight, Star, Quote } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Star, Quote, PenTool } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useScrollAnimation } from '@/hooks/useScrollAnimation'
+import { Link } from 'wouter'
 
 interface Testimonial {
   id: string;
@@ -113,9 +114,19 @@ export default function Testimonials() {
           <h2 className="text-4xl md:text-5xl font-bold gradient-text mb-4" data-testid="text-testimonials-title">
             Client Testimonials
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto" data-testid="text-testimonials-subtitle">
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8" data-testid="text-testimonials-subtitle">
             Discover how our clients have transformed their careers and achieved their goals
           </p>
+          <Link href="/testimonial">
+            <Button 
+              size="lg"
+              className="rounded-full px-8 py-3 hover-scale hover-glow smooth-all"
+              data-testid="button-submit-testimonial"
+            >
+              <PenTool className="h-5 w-5 mr-2" />
+              Share Your Experience
+            </Button>
+          </Link>
         </div>
 
         {/* Testimonial Carousel */}
