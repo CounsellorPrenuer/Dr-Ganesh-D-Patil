@@ -12,6 +12,8 @@ import {
 } from 'lucide-react'
 import { useQuery } from '@tanstack/react-query'
 import { Link } from 'wouter'
+import { useToast } from '@/hooks/use-toast'
+import { apiRequest } from '@/lib/queryClient'
 
 interface Service {
   id: string;
@@ -25,9 +27,80 @@ interface Service {
 }
 
 export default function Services() {
+  const { toast } = useToast();
+  
   const { data: services = [], isLoading, error } = useQuery<Service[]>({
     queryKey: ["/api/services"],
   });
+
+  const handlePayment = async (service: Service) => {
+    try {
+      // Call backend to create Razorpay order
+      const response = await apiRequest("POST", "/api/create-razorpay-order", {
+        amount: parseFloat(service.price),
+        currency: "INR",
+        serviceId: service.id,
+        serviceName: service.title
+      });
+
+      const { order } = await response.json();
+
+      // Load Razorpay script
+      const script = document.createElement('script');
+      script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+      script.async = true;
+      document.body.appendChild(script);
+
+      script.onload = () => {
+        const options = {
+          key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+          amount: order.amount,
+          currency: order.currency,
+          name: "Dr. Ganesh D. Patil",
+          description: service.title,
+          order_id: order.id,
+          handler: async (response: any) => {
+            try {
+              // Verify payment on backend
+              await apiRequest("POST", "/api/verify-payment", {
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature
+              });
+
+              toast({
+                title: "Payment Successful!",
+                description: `Thank you for purchasing ${service.title}. You will receive further details via email.`,
+              });
+            } catch (error) {
+              toast({
+                title: "Payment Verification Failed",
+                description: "Please contact support if amount was deducted.",
+                variant: "destructive",
+              });
+            }
+          },
+          prefill: {
+            name: "",
+            email: "",
+            contact: ""
+          },
+          theme: {
+            color: "#3B82F6"
+          }
+        };
+
+        const rzp = new (window as any).Razorpay(options);
+        rzp.open();
+      };
+    } catch (error) {
+      toast({
+        title: "Payment Failed",
+        description: "Unable to initiate payment. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
 
   // No fallback services - only show database services
   const fallbackServices: any[] = [];
@@ -121,6 +194,13 @@ export default function Services() {
                       ))}
                     </ul>
                   )}
+                  <Button 
+                    className="w-full mt-4"
+                    onClick={() => handlePayment(service)}
+                    data-testid={`button-pay-${index}`}
+                  >
+                    Pay ₹{service.price}
+                  </Button>
                 </CardContent>
               </Card>
             )

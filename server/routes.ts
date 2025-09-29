@@ -5,6 +5,8 @@ import { emailService } from "./emailService";
 import { paymentService } from "./paymentService";
 import { insertContactInquirySchema, insertTestimonialSchema, insertAdminTestimonialSchema, insertServiceSchema, insertArticleSchema, insertPaymentSchema } from "@shared/schema";
 import { fromZodError } from "zod-validation-error";
+import Razorpay from "razorpay";
+import crypto from "crypto";
 
 // Helper function to send data to Google Sheets
 async function sendToGoogleSheets(inquiryData: any, inquiryId: string): Promise<string | null> {
@@ -89,6 +91,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
     });
   });
 
+  // Initialize Razorpay
+  const razorpay = new Razorpay({
+    key_id: process.env.RAZORPAY_KEY_ID || "",
+    key_secret: process.env.RAZORPAY_KEY_SECRET || ""
+  });
+
   // Middleware to check admin authentication
   const requireAdmin = (req: any, res: any, next: any) => {
     if (!req.session.isAdmin) {
@@ -96,6 +104,77 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
     next();
   };
+
+  // Razorpay create order endpoint
+  app.post("/api/create-razorpay-order", async (req, res) => {
+    try {
+      const { amount, currency, serviceId, serviceName } = req.body;
+
+      const options = {
+        amount: Math.round(amount * 100), // Convert to paise
+        currency: currency || "INR",
+        receipt: `receipt_${serviceId}_${Date.now()}`,
+        notes: {
+          serviceId,
+          serviceName
+        }
+      };
+
+      const order = await razorpay.orders.create(options);
+      
+      res.json({ 
+        success: true, 
+        order 
+      });
+
+    } catch (error) {
+      console.error("Razorpay order creation error:", error);
+      res.status(500).json({ 
+        error: "Failed to create order",
+        details: error instanceof Error ? error.message : "Unknown error"
+      });
+    }
+  });
+
+  // Razorpay verify payment endpoint
+  app.post("/api/verify-payment", async (req, res) => {
+    try {
+      const { 
+        razorpay_order_id, 
+        razorpay_payment_id, 
+        razorpay_signature 
+      } = req.body;
+
+      // Verify signature
+      const body = razorpay_order_id + "|" + razorpay_payment_id;
+      const expectedSignature = crypto
+        .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET || "")
+        .update(body.toString())
+        .digest("hex");
+
+      if (expectedSignature === razorpay_signature) {
+        // Payment is verified, you can save to database here
+        res.json({ 
+          success: true, 
+          message: "Payment verified successfully",
+          paymentId: razorpay_payment_id,
+          orderId: razorpay_order_id
+        });
+      } else {
+        res.status(400).json({ 
+          success: false, 
+          error: "Invalid signature" 
+        });
+      }
+
+    } catch (error) {
+      console.error("Payment verification error:", error);
+      res.status(500).json({ 
+        error: "Payment verification failed",
+        details: error instanceof Error ? error.message : "Unknown error"
+      });
+    }
+  });
 
   // Payment routes
   app.post("/api/payments/create-order", async (req, res) => {
