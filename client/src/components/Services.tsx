@@ -32,28 +32,60 @@ export default function Services() {
   // Fallback services in case backend is empty
   const fallbackServices = [
     {
-      id: "fallback-1",
-      title: "Educational Leadership",
-      description: "Strategic guidance for educational institutions to implement innovative and learner-centered academic processes.",
+      id: "service-1",
+      title: "Scientific Psychometric Career Test",
+      description: "Comprehensive personality and aptitude assessment to identify your ideal career path through scientific analysis.",
       price: "Contact for pricing",
-      features: ["Pedagogical leadership", "Academic innovation", "Value-based systems", "Staff development"],
+      features: ["Personality analysis", "Aptitude assessment", "Career mapping", "Detailed report"],
       icon: Target
     },
     {
-      id: "fallback-2", 
-      title: "Training R&D",
-      description: "Comprehensive training programs designed to enhance teaching methodologies and educational effectiveness.",
+      id: "service-2", 
+      title: "Career Counselling",
+      description: "One-on-one guidance sessions to help you make informed decisions about your professional journey.",
       price: "Contact for pricing",
-      features: ["Process monitoring", "Skill development", "Faculty training", "Performance evaluation"],
+      features: ["Personal consultation", "Goal setting", "Action planning", "Ongoing support"],
       icon: Users
     },
     {
-      id: "fallback-3",
-      title: "Student Development",
-      description: "Holistic approach to student growth focusing on academic excellence and character building.",
+      id: "service-3",
+      title: "Career Guidance Seminar",
+      description: "Interactive group sessions covering career opportunities, industry trends, and professional development strategies.",
       price: "Contact for pricing", 
-      features: ["Career counseling", "Moral values", "Leadership skills", "Future readiness"],
+      features: ["Industry insights", "Interactive sessions", "Q&A discussions", "Resource materials"],
       icon: GraduationCap
+    },
+    {
+      id: "service-4",
+      title: "Training Workshop for Students",
+      description: "Skill development workshops designed to enhance students' academic performance and career readiness.",
+      price: "Contact for pricing",
+      features: ["Skill building", "Interactive learning", "Practical exercises", "Certificate provision"],
+      icon: BookOpen
+    },
+    {
+      id: "service-5",
+      title: "Training Workshop for Staff/Teachers",
+      description: "Professional development programs for educators to enhance teaching methodologies and leadership skills.",
+      price: "Contact for pricing",
+      features: ["Teaching methods", "Leadership skills", "Professional growth", "Best practices"],
+      icon: Building
+    },
+    {
+      id: "service-6",
+      title: "Educational Consultancy",
+      description: "Strategic advisory services for educational institutions seeking innovation and excellence in their academic processes.",
+      price: "Contact for pricing",
+      features: ["Strategic planning", "Process improvement", "Quality enhancement", "Implementation support"],
+      icon: Heart
+    },
+    {
+      id: "service-7",
+      title: "IELTS & Spoken English",
+      description: "Comprehensive English language training programs focusing on IELTS preparation and spoken English fluency.",
+      price: "Contact for pricing",
+      features: ["IELTS preparation", "Speaking practice", "Grammar enhancement", "Confidence building"],
+      icon: BookOpen
     }
   ];
 
@@ -189,6 +221,81 @@ export default function Services() {
             >
               Get Started Today
             </Button>
+          </Card>
+        </div>
+
+        {/* Payment Section */}
+        <div className="mt-16">
+          <Card className="max-w-4xl mx-auto p-8 bg-secondary/5 border-secondary/20">
+            <div className="text-center mb-8">
+              <h3 className="text-2xl font-bold text-foreground mb-4" data-testid="text-payment-title">
+                Secure Payment Options
+              </h3>
+              <p className="text-muted-foreground" data-testid="text-payment-description">
+                Choose your preferred payment method for booking our services
+              </p>
+            </div>
+            
+            <div className="grid md:grid-cols-2 gap-6">
+              <Card className="p-6 hover-elevate">
+                <div className="text-center">
+                  <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-primary/10 to-secondary/20 rounded-full flex items-center justify-center">
+                    <svg className="h-8 w-8 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+                      <line x1="1" y1="10" x2="23" y2="10"/>
+                    </svg>
+                  </div>
+                  <h4 className="font-semibold text-foreground mb-2" data-testid="text-online-payment-title">
+                    Online Payment
+                  </h4>
+                  <p className="text-sm text-muted-foreground mb-4" data-testid="text-online-payment-description">
+                    Secure payment through UPI, Credit/Debit Cards, Net Banking
+                  </p>
+                  <Button 
+                    variant="default" 
+                    className="w-full rounded-full"
+                    data-testid="button-online-payment"
+                  >
+                    Pay Online
+                  </Button>
+                </div>
+              </Card>
+              
+              <Card className="p-6 hover-elevate">
+                <div className="text-center">
+                  <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-primary/10 to-secondary/20 rounded-full flex items-center justify-center">
+                    <svg className="h-8 w-8 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                    </svg>
+                  </div>
+                  <h4 className="font-semibold text-foreground mb-2" data-testid="text-contact-payment-title">
+                    Contact for Payment
+                  </h4>
+                  <p className="text-sm text-muted-foreground mb-4" data-testid="text-contact-payment-description">
+                    Call or message us for personalized payment assistance and custom pricing
+                  </p>
+                  <Button 
+                    variant="outline" 
+                    className="w-full rounded-full"
+                    onClick={() => {
+                      const contactSection = document.getElementById('contact');
+                      if (contactSection) {
+                        contactSection.scrollIntoView({ behavior: 'smooth' });
+                      }
+                    }}
+                    data-testid="button-contact-payment"
+                  >
+                    Contact Us
+                  </Button>
+                </div>
+              </Card>
+            </div>
+            
+            <div className="text-center mt-6">
+              <p className="text-xs text-muted-foreground" data-testid="text-payment-security">
+                🔒 All payments are secure and encrypted. We accept major payment methods.
+              </p>
+            </div>
           </Card>
         </div>
       </div>

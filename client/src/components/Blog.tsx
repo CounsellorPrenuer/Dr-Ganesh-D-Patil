@@ -27,34 +27,27 @@ export default function Blog() {
   // Filter for published articles and take only the first 3 for the home page
   const publishedArticles = articles.filter(article => article.published).slice(0, 3);
 
-  // Fallback blog posts in case backend is empty
+  // Fallback content - Blog and YouTube links
   const fallbackPosts = [
     {
-      id: "fallback-1",
-      title: "5 Essential Steps to Career Transition Success",
-      excerpt: "Discover the proven strategies that help professionals successfully navigate major career changes and find fulfillment in their new roles.",
-      content: "This comprehensive guide covers the essential strategies for successful career transitions. Learn how to identify your transferable skills, build a compelling personal brand, network effectively, and navigate the emotional challenges of changing careers. With practical tips and real-world examples, this article provides a roadmap for professionals looking to make meaningful career changes.",
+      id: "blog-link",
+      title: "English Guru Ganesh Blog",
+      excerpt: "Explore comprehensive insights on career guidance, educational leadership, and professional development through our dedicated blog platform.",
+      content: "Visit our blog for the latest articles, tips, and expert guidance on career development, educational innovation, and professional growth strategies.",
       author: "Dr. Ganesh D. Patil",
-      category: "Career Guidance",
-      updatedAt: "2024-03-15"
+      category: "Blog",
+      updatedAt: "2024-03-20",
+      externalLink: "https://englishguruganesh.blogspot.com"
     },
     {
-      id: "fallback-2",
-      title: "The Future of Education: Adapting to Modern Challenges",
-      excerpt: "Explore how educational institutions can evolve to meet the demands of the 21st century and prepare students for tomorrow's workforce.",
-      content: "Educational institutions worldwide are facing unprecedented challenges in preparing students for a rapidly evolving job market. This article examines emerging trends in education technology, pedagogical innovation, and institutional transformation. From AI-assisted learning to hybrid classroom models, discover how educational leaders can adapt their strategies to meet modern demands while maintaining academic excellence.",
+      id: "youtube-channel",
+      title: "English Guru Ganesh D Patil YouTube Channel",
+      excerpt: "Watch expert tutorials, career guidance sessions, and educational content designed to help you succeed in your professional journey.",
+      content: "Subscribe to our YouTube channel for video tutorials, live sessions, and comprehensive guides on career development, English language skills, and educational excellence.",
       author: "Dr. Ganesh D. Patil",
-      category: "Education",
-      updatedAt: "2024-03-10"
-    },
-    {
-      id: "fallback-3",
-      title: "Building Essential Skills for Professional Growth",
-      excerpt: "Learn about the key competencies that drive career advancement and how to develop them effectively through targeted training programs.",
-      content: "Professional success in today's competitive landscape requires a strategic approach to skill development. This article explores the most in-demand competencies across industries, from technical expertise to soft skills like emotional intelligence and leadership. Learn how to assess your current skill gaps, create a development plan, and leverage various learning opportunities to accelerate your career growth.",
-      author: "Dr. Ganesh D. Patil",
-      category: "Skill Development",
-      updatedAt: "2024-03-05"
+      category: "Video Content",
+      updatedAt: "2024-03-18",
+      externalLink: "https://www.youtube.com/@EnglishGuruGaneshDPatil"
     }
   ];
 
@@ -148,16 +141,34 @@ export default function Blog() {
                   </div>
                 </div>
                 
-                <Link href={`/articles/${post.id}`}>
-                  <Button 
-                    variant="ghost" 
-                    className="w-full justify-between group p-0 h-auto font-medium text-secondary hover:text-secondary"
-                    data-testid={`button-read-more-${index}`}
+                {(post as any).externalLink ? (
+                  <a 
+                    href={(post as any).externalLink} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="block"
                   >
-                    Read Full Article
-                    <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-200" />
-                  </Button>
-                </Link>
+                    <Button 
+                      variant="ghost" 
+                      className="w-full justify-between group p-0 h-auto font-medium text-secondary hover:text-secondary"
+                      data-testid={`button-read-more-${index}`}
+                    >
+                      Visit {post.category === 'Blog' ? 'Blog' : 'Channel'}
+                      <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-200" />
+                    </Button>
+                  </a>
+                ) : (
+                  <Link href={`/articles/${post.id}`}>
+                    <Button 
+                      variant="ghost" 
+                      className="w-full justify-between group p-0 h-auto font-medium text-secondary hover:text-secondary"
+                      data-testid={`button-read-more-${index}`}
+                    >
+                      Read Full Article
+                      <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-200" />
+                    </Button>
+                  </Link>
+                )}
               </CardContent>
             </Card>
           ))}

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -17,6 +17,12 @@ const loginSchema = z.object({
 });
 
 type LoginForm = z.infer<typeof loginSchema>;
+
+// Hardcoded admin credentials
+const ADMIN_CREDENTIALS = {
+  username: "admin",
+  password: "admin123",
+};
 
 export default function AdminLogin() {
   const [, setLocation] = useLocation();
@@ -46,6 +52,14 @@ export default function AdminLogin() {
 
   const onSubmit = (data: LoginForm) => {
     setError("");
+
+    // Client-side check against hardcoded admin credentials
+    if (data.username !== ADMIN_CREDENTIALS.username || data.password !== ADMIN_CREDENTIALS.password) {
+      setError("Invalid credentials");
+      return;
+    }
+
+    // Proceed to call backend
     loginMutation.mutate(data);
   };
 
@@ -75,7 +89,7 @@ export default function AdminLogin() {
                 </p>
               )}
             </div>
-            
+
             <div className="space-y-2">
               <Label htmlFor="password">Password</Label>
               <Input
