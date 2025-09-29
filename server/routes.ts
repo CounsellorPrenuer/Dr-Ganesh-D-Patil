@@ -113,7 +113,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const options = {
         amount: Math.round(amount * 100), // Convert to paise
         currency: currency || "INR",
-        receipt: `receipt_${serviceId}_${Date.now()}`,
+        receipt: `rcpt_${Date.now().toString().slice(-8)}`,
         notes: {
           serviceId,
           serviceName
@@ -515,10 +515,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Admin dashboard stats
   app.get("/api/admin/stats", requireAdmin, async (req, res) => {
     try {
-      const [testimonials, services, articles, payments, contactInquiries] = await Promise.all([
+      const [testimonials, services, payments, contactInquiries] = await Promise.all([
         storage.getTestimonials(),
         storage.getServices(),
-        storage.getArticles(),
         storage.getPayments(),
         storage.getContactInquiries()
       ]);
@@ -528,8 +527,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
         pendingTestimonials: testimonials.filter(t => !t.approved).length,
         totalServices: services.length,
         activeServices: services.filter(s => s.active).length,
-        totalArticles: articles.length,
-        publishedArticles: articles.filter(a => a.published).length,
         totalPayments: payments.length,
         successfulPayments: payments.filter(p => p.status === 'paid').length,
         pendingPayments: payments.filter(p => p.status === 'pending').length,
@@ -554,14 +551,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       // Determine which data to include
       const includeTypes = Array.isArray(include) ? include : (include ? [include] : [
-        'testimonials', 'services', 'articles', 'payments', 'contactInquiries'
+        'testimonials', 'services', 'payments', 'contactInquiries'
       ]);
 
       // Fetch all data
-      const [testimonials, services, articles, payments, contactInquiries] = await Promise.all([
+      const [testimonials, services, payments, contactInquiries] = await Promise.all([
         storage.getTestimonials(),
         storage.getServices(),
-        storage.getArticles(),
         storage.getPayments(),
         storage.getContactInquiries()
       ]);
@@ -593,9 +589,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       if (includeTypes.includes('services')) {
         exportData.services = filterByDate(services);
-      }
-      if (includeTypes.includes('articles')) {
-        exportData.articles = filterByDate(articles, 'updatedAt');
       }
       if (includeTypes.includes('payments')) {
         exportData.payments = filterByDate(payments);
