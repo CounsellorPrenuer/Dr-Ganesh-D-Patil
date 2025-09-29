@@ -29,65 +29,8 @@ export default function Services() {
     queryKey: ["/api/services"],
   });
 
-  // Fallback services in case backend is empty
-  const fallbackServices = [
-    {
-      id: "service-1",
-      title: "Scientific Psychometric Career Test",
-      description: "Comprehensive personality and aptitude assessment to identify your ideal career path through scientific analysis.",
-      price: "Contact for pricing",
-      features: ["Personality analysis", "Aptitude assessment", "Career mapping", "Detailed report"],
-      icon: Target
-    },
-    {
-      id: "service-2", 
-      title: "Career Counselling",
-      description: "One-on-one guidance sessions to help you make informed decisions about your professional journey.",
-      price: "Contact for pricing",
-      features: ["Personal consultation", "Goal setting", "Action planning", "Ongoing support"],
-      icon: Users
-    },
-    {
-      id: "service-3",
-      title: "Career Guidance Seminar",
-      description: "Interactive group sessions covering career opportunities, industry trends, and professional development strategies.",
-      price: "Contact for pricing", 
-      features: ["Industry insights", "Interactive sessions", "Q&A discussions", "Resource materials"],
-      icon: GraduationCap
-    },
-    {
-      id: "service-4",
-      title: "Training Workshop for Students",
-      description: "Skill development workshops designed to enhance students' academic performance and career readiness.",
-      price: "Contact for pricing",
-      features: ["Skill building", "Interactive learning", "Practical exercises", "Certificate provision"],
-      icon: BookOpen
-    },
-    {
-      id: "service-5",
-      title: "Training Workshop for Staff/Teachers",
-      description: "Professional development programs for educators to enhance teaching methodologies and leadership skills.",
-      price: "Contact for pricing",
-      features: ["Teaching methods", "Leadership skills", "Professional growth", "Best practices"],
-      icon: Building
-    },
-    {
-      id: "service-6",
-      title: "Educational Consultancy",
-      description: "Strategic advisory services for educational institutions seeking innovation and excellence in their academic processes.",
-      price: "Contact for pricing",
-      features: ["Strategic planning", "Process improvement", "Quality enhancement", "Implementation support"],
-      icon: Heart
-    },
-    {
-      id: "service-7",
-      title: "IELTS & Spoken English",
-      description: "Comprehensive English language training programs focusing on IELTS preparation and spoken English fluency.",
-      price: "Contact for pricing",
-      features: ["IELTS preparation", "Speaking practice", "Grammar enhancement", "Confidence building"],
-      icon: BookOpen
-    }
-  ];
+  // No fallback services - only show database services
+  const fallbackServices: any[] = [];
 
   // Filter for active services only
   const activeServices = services.filter(s => s.active);
@@ -159,8 +102,25 @@ export default function Services() {
                   <CardDescription className="text-muted-foreground" data-testid={`text-service-description-${index}`}>
                     {service.description}
                   </CardDescription>
+                  {service.price && (
+                    <div className="text-lg font-semibold text-primary mt-2">
+                      ₹{service.price}
+                    </div>
+                  )}
                 </CardHeader>
-                <CardContent>
+                <CardContent className="space-y-4">
+                  {features.length > 0 && (
+                    <ul className="space-y-2">
+                      {features.map((feature, featureIndex) => (
+                        <li key={featureIndex} className="flex items-center space-x-2">
+                          <div className="w-2 h-2 bg-secondary rounded-full"></div>
+                          <span className="text-sm text-foreground" data-testid={`text-feature-${index}-${featureIndex}`}>
+                            {feature}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </CardContent>
               </Card>
             )
