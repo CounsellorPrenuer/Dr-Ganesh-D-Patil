@@ -159,38 +159,8 @@ export default function Services() {
                   <CardDescription className="text-muted-foreground" data-testid={`text-service-description-${index}`}>
                     {service.description}
                   </CardDescription>
-                  {service.price && (
-                    <div className="text-lg font-semibold text-primary mt-2">
-                      ₹{service.price}
-                    </div>
-                  )}
                 </CardHeader>
-                <CardContent className="space-y-4">
-                  {features.length > 0 && (
-                    <ul className="space-y-2">
-                      {features.map((feature, featureIndex) => (
-                        <li key={featureIndex} className="flex items-center space-x-2">
-                          <div className="w-2 h-2 bg-secondary rounded-full"></div>
-                          <span className="text-sm text-foreground" data-testid={`text-feature-${index}-${featureIndex}`}>
-                            {feature}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                  
-                  <div className="flex flex-col space-y-2">
-                    <Link href="/services">
-                      <Button 
-                        variant="default" 
-                        className="w-full rounded-full group"
-                        data-testid={`button-book-${index}`}
-                      >
-                        Book Service
-                        <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-200" />
-                      </Button>
-                    </Link>
-                  </div>
+                <CardContent>
                 </CardContent>
               </Card>
             )
