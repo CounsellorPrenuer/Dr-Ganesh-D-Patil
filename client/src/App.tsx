@@ -11,12 +11,9 @@ import AdminDashboard from "@/pages/AdminDashboard";
 import AdminTestimonials from "@/pages/AdminTestimonials";
 import AdminContact from "@/pages/AdminContact";
 import AdminServices from "@/pages/AdminServices";
-import AdminArticles from "@/pages/AdminArticles";
 import AdminPayments from "@/pages/AdminPayments";
 import AdminExport from "@/pages/AdminExport";
 import Services from "@/pages/Services";
-import Articles from "@/pages/Articles";
-import ArticleDetail from "@/pages/ArticleDetail";
 import SubmitTestimonial from "@/pages/SubmitTestimonial";
 
 function Router() {
@@ -24,8 +21,6 @@ function Router() {
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/services" component={Services} />
-      <Route path="/articles" component={Articles} />
-      <Route path="/articles/:id" component={ArticleDetail} />
       <Route path="/testimonial" component={SubmitTestimonial} />
       <Route path="/admin/login" component={AdminLogin} />
       <Route path="/admin/dashboard">
@@ -41,11 +36,6 @@ function Router() {
       <Route path="/admin/services">
         <AdminLayout>
           <AdminServices />
-        </AdminLayout>
-      </Route>
-      <Route path="/admin/articles">
-        <AdminLayout>
-          <AdminArticles />
         </AdminLayout>
       </Route>
       <Route path="/admin/export">

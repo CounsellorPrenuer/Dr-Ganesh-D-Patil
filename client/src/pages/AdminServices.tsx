@@ -355,7 +355,6 @@ export default function AdminServices() {
                   </div>
                   <div className="flex items-center space-x-4 text-sm text-muted-foreground">
                     <div className="flex items-center space-x-1">
-                      <DollarSign className="h-4 w-4" />
                       <span>₹{service.price}</span>
                     </div>
                     {service.duration && (
@@ -493,7 +492,6 @@ export default function AdminServices() {
                   </div>
                   <div className="flex items-center space-x-4 text-sm text-muted-foreground">
                     <div className="flex items-center space-x-1">
-                      <DollarSign className="h-4 w-4" />
                       <span>₹{service.price}</span>
                     </div>
                     {service.duration && (

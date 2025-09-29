@@ -49,11 +49,6 @@ const menuItems = [
     icon: Briefcase,
   },
   {
-    title: "Articles",
-    url: "/admin/articles",
-    icon: FileText,
-  },
-  {
     title: "Export Data",
     url: "/admin/export",
     icon: Download,
