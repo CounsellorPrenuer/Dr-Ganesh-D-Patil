@@ -159,11 +159,12 @@ export default function Services() {
                   <CardDescription className="text-muted-foreground" data-testid={`text-service-description-${index}`}>
                     {service.description}
                   </CardDescription>
-                  {service.price && (
-                    <div className="text-lg font-semibold text-primary mt-2">
-                      ₹{service.price}
-                    </div>
-                  )}
+                  <div className="text-lg font-semibold text-primary mt-2">
+                    {service.price && parseFloat(service.price) > 0 
+                      ? `₹${service.price}` 
+                      : 'Contact for pricing'
+                    }
+                  </div>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   {features.length > 0 && (
@@ -190,14 +191,6 @@ export default function Services() {
                         <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-200" />
                       </Button>
                     </Link>
-                    <Button 
-                      variant="outline" 
-                      className="w-full rounded-full group"
-                      onClick={() => handleServiceInquiry(service.title)}
-                      data-testid={`button-inquire-${index}`}
-                    >
-                      Learn More
-                    </Button>
                   </div>
                 </CardContent>
               </Card>
