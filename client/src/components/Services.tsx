@@ -32,60 +32,28 @@ export default function Services() {
   // Fallback services in case backend is empty
   const fallbackServices = [
     {
-      id: "service-1",
-      title: "Scientific Psychometric Career Test",
-      description: "Comprehensive personality and aptitude assessment to identify your ideal career path through scientific analysis.",
+      id: "fallback-1",
+      title: "Educational Leadership",
+      description: "Strategic guidance for educational institutions to implement innovative and learner-centered academic processes.",
       price: "Contact for pricing",
-      features: ["Personality analysis", "Aptitude assessment", "Career mapping", "Detailed report"],
+      features: ["Pedagogical leadership", "Academic innovation", "Value-based systems", "Staff development"],
       icon: Target
     },
     {
-      id: "service-2", 
-      title: "Career Counselling",
-      description: "One-on-one guidance sessions to help you make informed decisions about your professional journey.",
+      id: "fallback-2", 
+      title: "Training R&D",
+      description: "Comprehensive training programs designed to enhance teaching methodologies and educational effectiveness.",
       price: "Contact for pricing",
-      features: ["Personal consultation", "Goal setting", "Action planning", "Ongoing support"],
+      features: ["Process monitoring", "Skill development", "Faculty training", "Performance evaluation"],
       icon: Users
     },
     {
-      id: "service-3",
-      title: "Career Guidance Seminar",
-      description: "Interactive group sessions covering career opportunities, industry trends, and professional development strategies.",
+      id: "fallback-3",
+      title: "Student Development",
+      description: "Holistic approach to student growth focusing on academic excellence and character building.",
       price: "Contact for pricing", 
-      features: ["Industry insights", "Interactive sessions", "Q&A discussions", "Resource materials"],
+      features: ["Career counseling", "Moral values", "Leadership skills", "Future readiness"],
       icon: GraduationCap
-    },
-    {
-      id: "service-4",
-      title: "Training Workshop for Students",
-      description: "Skill development workshops designed to enhance students' academic performance and career readiness.",
-      price: "Contact for pricing",
-      features: ["Skill building", "Interactive learning", "Practical exercises", "Certificate provision"],
-      icon: BookOpen
-    },
-    {
-      id: "service-5",
-      title: "Training Workshop for Staff/Teachers",
-      description: "Professional development programs for educators to enhance teaching methodologies and leadership skills.",
-      price: "Contact for pricing",
-      features: ["Teaching methods", "Leadership skills", "Professional growth", "Best practices"],
-      icon: Building
-    },
-    {
-      id: "service-6",
-      title: "Educational Consultancy",
-      description: "Strategic advisory services for educational institutions seeking innovation and excellence in their academic processes.",
-      price: "Contact for pricing",
-      features: ["Strategic planning", "Process improvement", "Quality enhancement", "Implementation support"],
-      icon: Heart
-    },
-    {
-      id: "service-7",
-      title: "IELTS & Spoken English",
-      description: "Comprehensive English language training programs focusing on IELTS preparation and spoken English fluency.",
-      price: "Contact for pricing",
-      features: ["IELTS preparation", "Speaking practice", "Grammar enhancement", "Confidence building"],
-      icon: BookOpen
     }
   ];
 
@@ -159,12 +127,11 @@ export default function Services() {
                   <CardDescription className="text-muted-foreground" data-testid={`text-service-description-${index}`}>
                     {service.description}
                   </CardDescription>
-                  <div className="text-lg font-semibold text-primary mt-2">
-                    {service.price && parseFloat(service.price) > 0 
-                      ? `₹${service.price}` 
-                      : 'Contact for pricing'
-                    }
-                  </div>
+                  {service.price && (
+                    <div className="text-lg font-semibold text-primary mt-2">
+                      ₹{service.price}
+                    </div>
+                  )}
                 </CardHeader>
                 <CardContent className="space-y-4">
                   {features.length > 0 && (
