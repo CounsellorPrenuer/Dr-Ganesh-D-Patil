@@ -111,7 +111,7 @@ export default function Services() {
                 <CardContent className="space-y-4">
                   {features.length > 0 && (
                     <ul className="space-y-2">
-                      {features.map((feature, featureIndex) => (
+                      {features.map((feature: string, featureIndex: number) => (
                         <li key={featureIndex} className="flex items-center space-x-2">
                           <div className="w-2 h-2 bg-secondary rounded-full"></div>
                           <span className="text-sm text-foreground" data-testid={`text-feature-${index}-${featureIndex}`}>
