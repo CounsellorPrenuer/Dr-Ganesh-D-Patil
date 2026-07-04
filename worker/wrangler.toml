@@ -1,0 +1,12 @@
+name = "multi-tenant-platform"
+main = "src/index.ts"
+compatibility_date = "2026-06-07"
+
+[vars]
+ALLOWED_ORIGINS = "https://counsellorprenuer.github.io"
+VALID_PROJECT_IDS = "ascendbeyond,deepa-lal,santosh-jaiswal,rita,mahes-nazare,mahesh-nazare,proxima,mariapawar,thinknextcareers,careercounselor,iqeducenter,pichika-mallikarjuna-rao,rajivbanerjee,eagleeyefocus,growthplatteracademy,drganeshdpatil"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "mentoria-db"
+database_id = "a6b41b43-e530-4348-a208-1eb7b7b7fff9"

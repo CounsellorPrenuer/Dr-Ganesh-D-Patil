@@ -1,0 +1,9 @@
+export const PROJECT_ID = "drganeshdpatil";
+export const SANITY_PROJECT_ID = "xi1ios8w";
+export const SANITY_DATASET = "production";
+export const SANITY_STUDIO_HOST = "dr-ganesh-d-patil";
+export const GITHUB_PAGES_REPO_NAME = "Dr-Ganesh-D-Patil";
+export const SITE_BASE = "/Dr-Ganesh-D-Patil";
+export const WORKER_URL = "https://multi-tenant-platform.gauravgoodreads.workers.dev";
+export const CONTACT_EMAIL = "skillpluska@rediffmail.com";
+export const CONTACT_PHONE = "+91 9370000890";

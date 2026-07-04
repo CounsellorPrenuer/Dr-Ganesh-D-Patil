@@ -2,27 +2,31 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { ArrowRight, ExternalLink } from 'lucide-react'
+import { Link } from 'wouter'
+import { format } from 'date-fns'
+import { imageUrl } from '@/lib/sanity'
+import { useCms } from '@/hooks/useCms'
+
+const externalLinks = [
+  {
+    id: "blog-link",
+    title: "External Blog",
+    excerpt: "englishguruganesh.blogspot.com",
+    category: "Blog",
+    externalLink: "https://englishguruganesh.blogspot.com"
+  },
+  {
+    id: "youtube-channel",
+    title: "YouTube Channel",
+    excerpt: "English Guru Ganesh D Patil",
+    category: "Video Content",
+    externalLink: "https://www.youtube.com/@EnglishGuruGaneshDPatil"
+  }
+]
 
 export default function Blog() {
-  // Static content - Blog and YouTube links
-  const displayPosts = [
-    {
-      id: "blog-link",
-      title: "Blog",
-      excerpt: "englishguruganesh.blogspot.com",
-      author: "Dr. Ganesh D. Patil",
-      category: "Blog",
-      externalLink: "https://englishguruganesh.blogspot.com"
-    },
-    {
-      id: "youtube-channel",
-      title: "YouTube Channel",
-      excerpt: "English Guru Ganesh D Patil",
-      author: "Dr. Ganesh D. Patil",
-      category: "Video Content",
-      externalLink: "https://www.youtube.com/@EnglishGuruGaneshDPatil"
-    }
-  ];
+  const { data } = useCms()
+  const posts = data?.blogPosts?.slice(0, 3) ?? []
 
   return (
     <section id="blog" className="py-20 bg-accent/20">
@@ -36,48 +40,58 @@ export default function Blog() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-          {displayPosts.map((post, index) => (
-            <Card 
-              key={post.id} 
-              className="hover-elevate active-elevate-2 hover:-translate-y-1 transition-all duration-300 cursor-pointer group"
-              data-testid={`card-blog-post-${index}`}
-            >
-              <CardHeader className="pb-4">
-                <div className="flex items-center justify-between text-sm text-muted-foreground mb-3">
-                  <Badge variant="secondary" className="text-xs">
-                    {post.category}
-                  </Badge>
-                </div>
-                
-                <CardTitle className="text-xl font-semibold leading-tight group-hover:text-secondary transition-colors duration-200" data-testid={`text-blog-title-${index}`}>
-                  {post.title}
-                </CardTitle>
-                
-                <CardDescription className="text-muted-foreground leading-relaxed" data-testid={`text-blog-excerpt-${index}`}>
-                  {post.excerpt}
-                </CardDescription>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
+          {posts.map((post, index) => (
+            <Card key={post._id} className="hover-elevate transition-all duration-300 overflow-hidden">
+              {post.image && (
+                <img
+                  src={imageUrl(post.image, 700)}
+                  alt={post.image.alt || post.title}
+                  className="w-full h-40 object-cover"
+                  loading="lazy"
+                />
+              )}
+              <CardHeader>
+                {post.featured && <Badge variant="secondary" className="w-fit mb-2">Featured</Badge>}
+                <CardTitle className="text-xl">{post.title}</CardTitle>
+                <CardDescription className="line-clamp-3">{post.excerpt}</CardDescription>
+                <p className="text-sm text-muted-foreground">{format(new Date(post.publishedAt), "MMM dd, yyyy")}</p>
               </CardHeader>
-              
-              <CardContent className="pt-0">
-                <a 
-                  href={post.externalLink} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="block"
-                >
-                  <Button 
-                    variant="ghost" 
-                    className="w-full justify-between group p-0 h-auto font-medium text-secondary hover:text-secondary"
-                    data-testid={`button-visit-${index}`}
-                  >
+              <CardContent>
+                <Link href={`/blog/${post.slug}`}>
+                  <Button variant="ghost" className="p-0 h-auto font-medium text-secondary">
+                    Read More <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </Link>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          {externalLinks.map((post, index) => (
+            <Card key={post.id} className="hover-elevate transition-all duration-300">
+              <CardHeader>
+                <Badge variant="secondary" className="w-fit mb-2">{post.category}</Badge>
+                <CardTitle className="text-xl">{post.title}</CardTitle>
+                <CardDescription>{post.excerpt}</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <a href={post.externalLink} target="_blank" rel="noopener noreferrer">
+                  <Button variant="ghost" className="p-0 h-auto font-medium text-secondary">
                     Visit {post.category === 'Blog' ? 'Blog' : 'Channel'}
-                    <ExternalLink className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-200" />
+                    <ExternalLink className="ml-2 h-4 w-4" />
                   </Button>
                 </a>
               </CardContent>
             </Card>
           ))}
+        </div>
+
+        <div className="text-center mt-10">
+          <Link href="/blog">
+            <Button variant="outline" className="rounded-full">View All Articles</Button>
+          </Link>
         </div>
       </div>
     </section>

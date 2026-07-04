@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button'
 import { ChevronDown } from 'lucide-react'
-import profileImage from '@assets/image_1757930432279.png'
+import profileImage from '@assets/profile.jpg'
 import { useScrollAnimation } from '@/hooks/useScrollAnimation'
 
 export default function Hero() {

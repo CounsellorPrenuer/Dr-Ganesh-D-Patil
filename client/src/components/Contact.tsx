@@ -14,6 +14,8 @@ import {
   Youtube,
   Send 
 } from 'lucide-react'
+import { CONTACT_EMAIL } from '@/lib/config'
+import { workerPost } from '@/lib/workerApi'
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -36,39 +38,23 @@ export default function Contact() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.log('Form submitted with data:', formData)
     setIsSubmitting(true)
     
     try {
-      console.log('Making fetch request to /api/contact...')
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
+      await workerPost('/api/forms/submit', {
+        name: formData.name,
+        email: formData.email,
+        phone: '',
+        message: `${formData.subject ? `Subject: ${formData.subject}\n\n` : ''}${formData.message}`,
+        plan_id: 'contact-home',
       })
-
-      console.log('Response status:', response.status)
-      const result = await response.json()
-      console.log('Response data:', result)
-
-      if (response.ok) {
-        const successMessage = result.message || 'Your message has been sent successfully! Dr. Patil will get back to you soon.'
-        console.log('Showing success message:', successMessage)
-        alert(successMessage)
-        console.log('Clearing form data...')
-        setFormData({ name: '', email: '', subject: '', message: '' })
-        console.log('Form data cleared')
-      } else {
-        console.error('Server error response:', result)
-        alert(result.details || result.error || 'Failed to send message. Please try again.')
-      }
+      alert('Your message has been sent successfully! Dr. Patil will get back to you soon.')
+      setFormData({ name: '', email: '', subject: '', message: '' })
     } catch (error) {
-      console.error('Contact form error:', error)
-      alert('Failed to send message. Please check your internet connection and try again.')
+      const subject = encodeURIComponent(formData.subject || 'Website enquiry')
+      const body = encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`)
+      window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`
     } finally {
-      console.log('Setting isSubmitting to false')
       setIsSubmitting(false)
     }
   }
