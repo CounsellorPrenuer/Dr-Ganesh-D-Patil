@@ -8,7 +8,7 @@ import {
   Heart
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import logoImage from '@assets/logo.jpg'
+import logoImage from '@assets/8c7ab301d192-SKILL_PLUS_KA_BLACK_1757929948113.jpg'
 
 export default function Footer() {
   const handleSocialClick = (platform: string, url: string) => {
@@ -26,6 +26,7 @@ export default function Footer() {
   }
 
   const quickLinks = [
+    { label: 'Pricing', href: '#pricing' },
     { label: 'Home', href: '#hero' },
     { label: 'About', href: '#about' },
     { label: 'Services', href: '#services' },

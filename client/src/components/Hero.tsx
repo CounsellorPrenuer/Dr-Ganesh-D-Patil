@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button'
 import { ChevronDown } from 'lucide-react'
-import profileImage from '@assets/profile.jpg'
+import profileImage from '@assets/image_1757930432279.png'
 import { useScrollAnimation } from '@/hooks/useScrollAnimation'
 
 export default function Hero() {
@@ -66,6 +66,15 @@ export default function Hero() {
               data-testid="button-book-consultation"
             >
               Book Consultation
+            </Button>
+            <Button 
+              variant="outline"
+              size="lg"
+              className="rounded-full px-8 py-3 text-lg hover-scale hover-lift smooth-all"
+              onClick={() => scrollToSection('pricing')}
+              data-testid="button-view-pricing"
+            >
+              View Mentoria Plans
             </Button>
             <Button 
               variant="outline"

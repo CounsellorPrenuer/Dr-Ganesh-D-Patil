@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Menu, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import logoImage from '@assets/logo.jpg'
+import logoImage from '@assets/8c7ab301d192-SKILL_PLUS_KA_BLACK_1757929948113.jpg'
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -18,7 +18,7 @@ export default function Header() {
   // Track active section based on scroll position
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['hero', 'about', 'services', 'blog', 'testimonials', 'contact']
+      const sections = ['hero', 'about', 'services', 'pricing', 'blog', 'testimonials', 'contact']
       const scrollY = window.scrollY + 150 // Offset for header height
       
       let currentSection = 'hero' // Default to hero
@@ -49,6 +49,7 @@ export default function Header() {
     { label: 'Home', id: 'hero' },
     { label: 'About', id: 'about' },
     { label: 'Services', id: 'services' },
+    { label: 'Pricing', id: 'pricing' },
     { label: 'Testimonials', id: 'testimonials' },
     { label: 'Blog', id: 'blog' },
     { label: 'Contact', id: 'contact' }
